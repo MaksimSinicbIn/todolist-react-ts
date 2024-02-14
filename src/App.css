@@ -1,0 +1,13 @@
+.App {
+    padding: 30px;
+    display: flex;
+}
+
+.App > div {
+    margin-right: 50px;
+}
+
+.taskTitleInputError {
+    border: 3px solid red;
+    outline: none;
+}
