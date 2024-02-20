@@ -11,3 +11,23 @@
     border: 3px solid red;
     outline: none;
 }
+
+.task {
+    font-weight: bold;
+}
+
+.task-done {
+    opacity: 0.5;
+}
+
+.filter-btn-active {
+    background-color: blueviolet;
+    color: white;
+}
+
+.task-counter {
+    font-weight: 100;
+    font-size: small;
+    background-color: aqua;
+    margin: 0 5px;
+}
