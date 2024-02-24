@@ -85,6 +85,9 @@ export function Todolist(props: PropsType) {
                                 onClick={addTask}>+</button>
                         {taskInputError && <div style={{ color: "red" }}>Enter correct title!</div>}
                     </div>
+                    {props.tasks.length === 0 ? (
+                        <p>Тасок нет!</p>
+                    ) : (
                         <ul>
                             {
                                 props.tasks.map(t => {
@@ -107,6 +110,7 @@ export function Todolist(props: PropsType) {
                                 })
                             }
                         </ul>
+                    )}
                     <div>
                         <button className={props.filter === 'all' ? "filter-btn-active" : undefined}
                                 onClick={onAllClickHandler}>
