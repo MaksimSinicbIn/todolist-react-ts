@@ -1,5 +1,5 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
-import {FilterValuesType, getFilteredTasks} from './App';
+import {FilterValuesType} from './App';
 
 export type TaskType = {
     id: string
@@ -11,21 +11,34 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     filter: FilterValuesType
-    removeTask: (taskId: string) => void
+    todolistId: string
+    removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (value: FilterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (id: string, newIsDone: boolean) => void
+    addTask: (title: string, todolistId: string) => void
+    changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
 }
 
 export function Todolist(props: PropsType) {
     const [isCollapsed, setIsCollapsed] = useState(false)
     const [taskTitle, setTaskTitle] = useState("")
     const [taskInputError, setTaskInputError] = useState(false)
+    
+    const getFilteredTasks = () => {
+        let tasksForTodolist = props.tasks;
+        if (props.filter === "active") {
+            tasksForTodolist = props.tasks.filter(t => t.isDone === false);
+        }
+        if (props.filter === "completed") {
+            tasksForTodolist = props.tasks.filter(t => t.isDone === true);
+        }
+        return tasksForTodolist
+    }
+    
 
     function addTask() {
         const trimmedTitle = taskTitle.trim()
         if (trimmedTitle) {
-            props.addTask(taskTitle)
+            props.addTask(taskTitle, props.todolistId)
         } else {
             setTaskInputError(true)
         }
@@ -51,7 +64,7 @@ export function Todolist(props: PropsType) {
         ? "taskTitleInputError"
         : ""
 
-    const activeTasksCounter = getFilteredTasks(props.tasks, "active").length
+    // const activeTasksCounter = getFilteredTasks(props.tasks, "active").length
 
     function onAllClickHandler () {
         props.changeFilter("all")
@@ -68,7 +81,7 @@ export function Todolist(props: PropsType) {
     return (
         <div>
             <h3>{props.title}
-                {isCollapsed && <span className='task-counter'>active: {activeTasksCounter}</span>}
+                {isCollapsed && <span className='task-counter'>active:</span>}
                 <button onClick={() => setIsCollapsed(!isCollapsed)}>{isCollapsed ? "Open" : "Close"}</button>
             </h3>
             {
@@ -90,19 +103,19 @@ export function Todolist(props: PropsType) {
                     ) : (
                         <ul>
                             {
-                                props.tasks.map(t => {
+                                getFilteredTasks().map( t => {
                                     let taskClasses = ["task"]
                                     if (t.isDone) {
                                         taskClasses = taskClasses.concat("task-done")
                                     }
                                     function onClickHandler () {
-                                        props.removeTask(t.id)
+                                        props.removeTask(t.id, props.todolistId)
                                     }
                                     return (
                                         <li key={t.id} >
                                             <input type="checkbox"
                                                     checked={t.isDone}
-                                                    onChange={ (e) => props.changeTaskStatus(t.id, e.currentTarget.checked) }/>
+                                                    onChange={ (e) => props.changeTaskStatus(t.id, e.currentTarget.checked, props.todolistId) }/>
                                             <span className={taskClasses.join(" ")}>{t.title}</span>
                                             <button onClick={onClickHandler}>x</button>
                                         </li>
