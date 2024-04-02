@@ -14,12 +14,13 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     filter: FilterValuesType
-    todolistId: string
     removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (todolistId: string, value: FilterValuesType) => void
-    addTask: (title: string, todolistId: string) => void
+    addTask: (todolistId: string, title: string) => void
     changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
     updateTaskTitle: (todolistId: string, id: string, newTitle: string) => void
+    updateTodolistTitle: (todolistId: string, title: string) => void
+    removeTodolist: (id: string) => void
 }
 
 export function Todolist(props: PropsType) {
@@ -35,30 +36,39 @@ export function Todolist(props: PropsType) {
         return tasksForTodolist
     }
 
-    function addTaskHandler(title: string) {
-        props.addTask(title, props.id)
+    const addTaskHandler = (title: string) => {
+        props.addTask(props.id, title)
     }
 
-    function updateTaskTitleHandler (taskId: string, newTitle: string) {
-        props.updateTaskTitle(props.todolistId, taskId, newTitle)
+    const updateTaskTitleHandler = (taskId: string, newTitle: string) => {
+        props.updateTaskTitle(props.id, taskId, newTitle)
     }
 
-    function onAllClickHandler () {
-        props.changeFilter(props.todolistId, "all")
+    const updateTodolistTitleHandler = (title: string) => {
+        props.updateTodolistTitle(props.id, title )
     }
 
-    function onActiveClickHandler () {
-        props.changeFilter(props.todolistId, "active")
+    const removeTodolistHandler = () => {
+        props.removeTodolist(props.id)
     }
 
-    function onCompletedClickHandler () {
-        props.changeFilter(props.todolistId, "completed")
+    const onAllClickHandler = () => {
+        props.changeFilter(props.id, "all")
+    }
+
+    const onActiveClickHandler = () => {
+        props.changeFilter(props.id, "active")
+    }
+
+    const onCompletedClickHandler = () => {
+        props.changeFilter(props.id, "completed")
     }
 
     return (
         <div>
             <h3>
-                {props.title}
+                <EditableSpan oldTitle={props.title} callBack={updateTodolistTitleHandler} />
+                <button onClick={removeTodolistHandler}>X</button>
             </h3>
             <div>
                 <AddItemForm onClick={addTaskHandler} />
@@ -70,13 +80,13 @@ export function Todolist(props: PropsType) {
                     {
                         getFilteredTasks().map(t => {
                             function onClickHandler() {
-                                props.removeTask(t.id, props.todolistId)
+                                props.removeTask(t.id, props.id)
                             }
                             return (
                                 <li key={t.id} >
                                     <input type="checkbox"
                                         checked={t.isDone}
-                                        onChange={(e) => props.changeTaskStatus(t.id, e.currentTarget.checked, props.todolistId)} />
+                                        onChange={(e) => props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)} />
                                     <EditableSpan className={t.isDone ? 'task-done' : ''} oldTitle={t.title} callBack={(newTitle) => { updateTaskTitleHandler(t.id, newTitle) }} />
                                     <button onClick={onClickHandler}>x</button>
                                 </li>
