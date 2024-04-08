@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
-import { v1 } from 'uuid';
 import { AddItemForm } from './AddItemForm';
 import { ButtonAppBar } from './ButtonAppBar';
 import Container from '@mui/material/Container';
@@ -9,8 +8,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
-import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from './state/tasks-reducer';
-import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC } from './state/todolists-reducer';
+import { addTodolistAC } from './state/todolists-reducer';
 
 export type FilterValuesType = "all" | "active" | "completed";
 
