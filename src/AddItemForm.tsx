@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useState, KeyboardEvent, ChangeEvent } from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 type AddItemFormPropsType  = {
     onClick: (title: string) => void
@@ -8,7 +10,7 @@ type AddItemFormPropsType  = {
 export const AddItemForm = (props: AddItemFormPropsType) => {
     
     const [title, setTitle] = useState("")
-    const [error, setError] = useState("")
+    const [error, setError] = useState<string | null>(null)
 
     
     const addTask = () => {
@@ -26,20 +28,32 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
     }
 
     function onKeyDownAddTaskHandler (e: KeyboardEvent<HTMLInputElement>) {
+        setError(null);
         if (e.key === "Enter") {
             addTask()
         }
     }
 
+    const buttonStyles = {
+        maxWidth: '39px',
+        maxHeight: '39px',
+        minWidth: '39px',
+        minHeight: '39px'
+    }
+
     return (
         <div>
-            <input
+            <TextField
+                error={!!error}
+                id="outlined-basic"
+                label={error ? error : "Type something"}
+                variant="outlined"
+                size='small'
                 value={title}
-                className={error ? 'error' : ''}
                 onChange={onChangeSetTitle}
-                onKeyDown={onKeyDownAddTaskHandler} />
-            <button onClick={addTask}>+</button>
-            { error && <div className='error-message'>{error}</div>}
+                onKeyDown={onKeyDownAddTaskHandler}
+            />
+            <Button sx={buttonStyles} variant="contained" onClick={addTask}>+</Button>
         </div>
     );
 };
