@@ -76,5 +76,10 @@
     "start-server-and-test": "^2.0.3",
     "storybook": "^8.0.9",
     "webpack": "5.91.0"
+  },
+  "jest": { 
+    "transformIgnorePatterns": [ 
+      "node_modules/(?!axios)/" 
+    ] 
   }
 }
