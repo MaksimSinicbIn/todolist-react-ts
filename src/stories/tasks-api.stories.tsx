@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { TaskstApi } from '../api/tasks-api'
 
 export default {
@@ -14,7 +14,7 @@ export const GetTasks = () => {
     const getTask = () => {
         TaskstApi.getTasks(todolistId)
         .then((res) => {
-            setState(res)
+            setState(res.data)
         })
     }
 
@@ -42,7 +42,7 @@ export const CreateTask = () => {
     const createTask = () => {
         TaskstApi.createTasks(todolistId, title)
             .then((res) => {
-                setState(res)
+                setState(res.data)
             })
     }
 
@@ -56,7 +56,7 @@ export const CreateTask = () => {
     />
     <input
         type="text"
-        placeholder='Type todolistID...'
+        placeholder='Type title...'
         value={title}
         onChange={(e) => setTitle(e.currentTarget.value)}
     />
@@ -109,9 +109,18 @@ export const UpdateTaskTitle = () => {
     const [title, setTitle] = useState<string>('')
 
     const updateTask = () => {
-        TaskstApi.updateTasks(todolistId, taskId, title)
+        const model = {
+            title: title,
+            description: '',
+            completed: false,
+            status: 0,
+            priority: 1,
+            startDate: '',
+            deadline: ''
+        }
+        TaskstApi.updateTasks(todolistId, taskId, model)
             .then((res) => {
-                setState(res)
+                setState(res.data)
             })
     }
 

@@ -3,21 +3,14 @@ import './App.css';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import {TaskType, Todolist} from './Todolist';
+import { Todolist} from './Todolist';
 import { AddItemForm } from './AddItemForm';
 import { ButtonAppBar } from './ButtonAppBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppRootStateType } from './state/store';
-import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC } from './state/todolists-reducer';
+import { FilterValuesType, TodolistDomainType, addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC } from './state/todolists-reducer';
 import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC } from './state/tasks-reducer';
-
-export type FilterValuesType = "all" | "active" | "completed";
-
-export type TodolistType = {
-    id: string
-    title: string
-    filter: FilterValuesType
-}
+import { TaskStatuses, TaskType } from './api/tasks-api';
 
 export type TasksStateType = {
     [key: string]: TaskType[]
@@ -26,7 +19,7 @@ export type TasksStateType = {
 function App() {
     //BLL
 
-    const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
+    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
 
     const dispatch = useDispatch()
@@ -39,8 +32,8 @@ function App() {
         dispatch(removeTaskAC(todolistId, taskId))
     }, [dispatch])
 
-    const changeTaskStatus = useCallback((todolistId: string, isDone: boolean, taskId: string) => {
-        dispatch(changeTaskStatusAC(todolistId, isDone, taskId))
+    const changeTaskStatus = useCallback((todolistId: string, status: TaskStatuses, taskId: string) => {
+        dispatch(changeTaskStatusAC(todolistId, status, taskId))
     }, [dispatch])
 
     const changeTaskTitle = useCallback((todolistId: string, title: string, taskId: string) => {

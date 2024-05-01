@@ -1,5 +1,4 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {AddItemForm} from '../AddItemForm';
 import { fn } from '@storybook/test';
 import { EditableSpan } from '../EditableSpan';
 

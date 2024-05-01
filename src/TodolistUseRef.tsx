@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import {FilterValuesType} from './App';
+import { FilterValuesType } from './state/todolists-reducer';
 
 export type TaskType = {
     id: string
