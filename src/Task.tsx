@@ -9,24 +9,24 @@ import { TaskStatuses, TaskType } from './api/tasks-api';
 type TaskPropsType = {
     task: TaskType
     todolistId: string
-    removeTask: (taskId: string, todolistId: string) => void
-    changeTaskTitle: (todolistId: string, newTitle: string, id: string) => void
-    changeTaskStatus: (todolistId: string, status: TaskStatuses, id: string ) => void
+    removeTask: (todolistId: string, taskId: string ) => void
+    changeTaskTitle: (todolistId: string, id: string, newTitle: string) => void
+    changeTaskStatus: (todolistId: string, id: string , status: TaskStatuses) => void
 };
 
 export const Task = memo((props: TaskPropsType) => {
     
     const removeTaskHandler = () => {
-        props.removeTask(props.task.id, props.todolistId)
+        props.removeTask(props.todolistId, props.task.id)
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked
-        props.changeTaskStatus(props.task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New, props.todolistId)
+        props.changeTaskStatus(props.todolistId, props.task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New)
     }
 
     const onTitleChangeHandler = React.useCallback((newTitle: string) => {
-        props.changeTaskTitle(props.task.id, newTitle, props.todolistId)
+        props.changeTaskTitle(props.todolistId, props.task.id, newTitle)
     }, [props.changeTaskTitle, props.task.id, props.todolistId])
     
     return (
