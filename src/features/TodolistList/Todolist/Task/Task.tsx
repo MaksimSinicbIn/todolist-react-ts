@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { ChangeEvent, memo } from 'react';
-import { EditableSpan } from './EditableSpan';
+import { EditableSpan } from '../../../../components/EditableSpan/EditableSpan';
 import Checkbox from '@mui/material/Checkbox/Checkbox'
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { TaskStatuses, TaskType } from './api/tasks-api';
+import { TaskStatuses, TaskType } from '../../../../api/tasks-api';
 
 type TaskPropsType = {
     task: TaskType

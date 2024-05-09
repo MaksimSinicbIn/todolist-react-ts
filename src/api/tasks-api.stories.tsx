@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TasksApi } from '../api/tasks-api'
+import { TasksApi } from './tasks-api'
 
 export default {
     title: 'API/Tasks',

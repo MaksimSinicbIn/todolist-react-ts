@@ -1,10 +1,10 @@
 import axios from "axios";
+import {ResponseType} from './todolist-api';
 
-type ResponseType<T = {}> = {
-    fieldErrors: string[]
-    resultCode: number
-    messages: string[],
-    data: T
+type GetTasksResponse = {
+    error: string | null
+    totalCount: number
+    items: TaskType[]
 }
 
 export type TaskType = {
@@ -20,6 +20,15 @@ export type TaskType = {
     addedDate: string
 }
 
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+}
+
 export enum TaskStatuses {
     New = 0,
     inProgress = 1,
@@ -33,21 +42,6 @@ export enum TaskPriorities {
     Hi = 2,
     Urgently = 3,
     Later = 4
-}
-
-export type UpdateTaskModelType = {
-    title: string
-    description: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-}
-
-type GetTasksResponse = {
-    error: string | null
-    totalCount: number
-    items: TaskType[]
 }
 
 const instance = axios.create({

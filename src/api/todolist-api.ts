@@ -7,7 +7,7 @@ export type TodolistApiType = {
     "order": number
 }
 
-type ResponseType<T = {}> = {
+export type ResponseType<T = {}> = {
     fieldErrors: string[]
     resultCode: number
     messages: string[],
