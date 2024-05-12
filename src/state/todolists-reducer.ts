@@ -1,6 +1,7 @@
 import { v1 } from "uuid";
 import { TodolistApi, TodolistApiType } from "../api/todolist-api";
 import { Dispatch } from "redux";
+import { SetErrorActionType, SetStatusActionType, setStatus } from "./app-reducer";
 
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
@@ -14,6 +15,9 @@ type ActionsType =
     | ChangeTodolistTitleActionType
     | ChangeTodolistFilterActionType
     | SetTodolistsActionType
+    | SetStatusActionType
+    | SetErrorActionType
+
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -63,9 +67,11 @@ export const setTodolistsAC = (todolists: TodolistApiType[]) => {
 
 // Thunk Creators
 export const getTodolistsTC = () => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setStatus('loading'))
     TodolistApi.getTodolists()
             .then(res => {
                 dispatch(setTodolistsAC(res.data))
+                dispatch(setStatus('succeeded'))
             })
 }
 
