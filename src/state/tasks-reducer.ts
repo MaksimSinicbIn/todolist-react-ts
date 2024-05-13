@@ -2,7 +2,7 @@ import { Dispatch } from "redux"
 import { AppRootStateType } from "./store"
 import { TaskType, TasksApi, UpdateTaskModelType } from "../api/tasks-api"
 import { AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType } from "./todolists-reducer"
-import { SetErrorActionType, SetStatusActionType, setError, setStatus } from "./app-reducer"
+import { SetErrorActionType, SetStatusActionType, setAppError, setAppStatus } from "./app-reducer"
 
 type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 type AddTaskActionType = ReturnType<typeof addTaskAC>
@@ -72,25 +72,28 @@ export const updateTaskAC = (todolistId: string, id: string, model: Partial<Upda
 
 // Thunk Creators
 export const setTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setStatus('loading'))
+    dispatch(setAppStatus('loading'))
     TasksApi.getTasks(todolistId)
             .then(res => {
                 dispatch(setTasksAC(todolistId, res.data.items))
-                dispatch(setStatus('succeeded'))
+                dispatch(setAppStatus('succeeded'))
             })
 }
 
 export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatus('loading'))
     TasksApi.createTasks(todolistId, title)
             .then(res => {
                 if (res.data.resultCode === 0) {
                     dispatch(addTaskAC(res.data.data.item))
+                    dispatch(setAppStatus('succeeded'))
                 } else {
                     if (res.data.messages.length) {
-                        dispatch(setError(res.data.messages[0]))
+                        dispatch(setAppError(res.data.messages[0]))
                     } else {
-                        dispatch(setError('Some error occurred'))
+                        dispatch(setAppError('Some error occurred'))
                     }
+                    dispatch(setAppStatus('failed'))
                 }
             })
 }

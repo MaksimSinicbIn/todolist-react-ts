@@ -12,10 +12,16 @@ const meta: Meta<typeof AddItemForm> = {
     argTypes: {
         onClick: { description: 'Button clicked inside form' },
     },
-    args: { onClick: fn() },
+    args: { 
+        onClick: fn(),
+    },
 };
 
 export default meta;
 type Story = StoryObj<typeof AddItemForm>;
 
 export const AddItemFormStory: Story = {}
+
+export const AddItemFormDisabledStory: Story = {
+    args: { disabled: true }
+}

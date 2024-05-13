@@ -7,9 +7,11 @@ import { ErrorSnackbars } from '../components/ErrorSnackbar/ErrorSnackbar';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 import { useAppSelector } from '../state/store';
 
+type AppPropsType = {
+    demo?: boolean
+}
 
-
-function App() {
+function App({demo = false}: AppPropsType) {
 
     const status = useAppSelector(state => state.app.status)
 
@@ -19,7 +21,7 @@ function App() {
             <ButtonAppBar />
             {status === 'loading' && <LinearProgress color="secondary" />}
             <Container fixed>
-                <TodolistsList />
+                <TodolistsList demo={demo}/>
             </Container>
         </div>
     );

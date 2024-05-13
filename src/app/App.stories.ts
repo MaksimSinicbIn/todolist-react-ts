@@ -9,6 +9,9 @@ const meta: Meta<typeof App> = {
         layout: 'centered',
     },
     tags: ['autodocs'],
+    args: {
+        demo: true
+    },
     decorators: [ReduxStoreProviderDecorator]
 };
 
