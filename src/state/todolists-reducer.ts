@@ -1,6 +1,7 @@
 import { TodolistApi, TodolistApiType } from "../api/todolist-api";
 import { Dispatch } from "redux";
 import { RequestStatusType, SetErrorActionType, SetStatusActionType, setAppStatus } from "./app-reducer";
+import { handleServerNetworkError } from "../utils/error-utils";
 
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
@@ -81,6 +82,9 @@ export const getTodolistsTC = () => (dispatch: Dispatch<ActionsType>) => {
                 dispatch(setTodolistsAC(res.data))
                 dispatch(setAppStatus('succeeded'))
             })
+            .catch(e => {
+                handleServerNetworkError(dispatch, e)
+            })
 }
 
 export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsType>) => {
@@ -89,6 +93,9 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<ActionsType>
             .then(res => {
                 dispatch(addTodolistAC(res.data.data.item))
                 dispatch(setAppStatus('succeeded'))
+            })
+            .catch(e => {
+                handleServerNetworkError(dispatch, e)
             })
 }
 
@@ -100,11 +107,17 @@ export const removeTodolistTC = (todolistId: string) => (dispatch: Dispatch<Acti
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setAppStatus('succeeded'))
             })
+            .catch(e => {
+                handleServerNetworkError(dispatch, e)
+            })
 }
 
 export const updateTodolistTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
     TodolistApi.updateTodolists(todolistId, title)
             .then(res => {
                 dispatch(changeTodolistTitleAC(todolistId, title))
+            })
+            .catch(e => {
+                handleServerNetworkError(dispatch, e)
             })
 }

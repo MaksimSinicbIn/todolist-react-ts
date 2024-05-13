@@ -3,6 +3,7 @@ import { AppRootStateType } from "./store"
 import { TaskType, TasksApi, UpdateTaskModelType } from "../api/tasks-api"
 import { AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType } from "./todolists-reducer"
 import { SetErrorActionType, SetStatusActionType, setAppError, setAppStatus } from "./app-reducer"
+import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
 
 type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
 type AddTaskActionType = ReturnType<typeof addTaskAC>
@@ -78,6 +79,9 @@ export const setTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsTyp
                 dispatch(setTasksAC(todolistId, res.data.items))
                 dispatch(setAppStatus('succeeded'))
             })
+            .catch(e => {
+                handleServerNetworkError(dispatch, e)
+            })
 }
 
 export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
@@ -88,13 +92,11 @@ export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispa
                     dispatch(addTaskAC(res.data.data.item))
                     dispatch(setAppStatus('succeeded'))
                 } else {
-                    if (res.data.messages.length) {
-                        dispatch(setAppError(res.data.messages[0]))
-                    } else {
-                        dispatch(setAppError('Some error occurred'))
-                    }
-                    dispatch(setAppStatus('failed'))
+                    handleServerAppError(dispatch, res.data)
                 }
+            })
+            .catch(e => {
+                handleServerNetworkError(dispatch, e)
             })
 }
 
@@ -102,6 +104,9 @@ export const removeTaskTC = (todolistId: string, id: string) => (dispatch: Dispa
     TasksApi.deleteTasks(todolistId, id)
             .then(res => {
                 dispatch(removeTaskAC(todolistId, id))
+            })
+            .catch(e => {
+                handleServerNetworkError(dispatch, e)
             })
 }
 
@@ -124,7 +129,14 @@ export const updateTaskTC = (todolistId: string, id: string, domainModel: Partia
         }
         TasksApi.updateTasks(todolistId, id, apiModel)
                 .then(res => {
-                    dispatch(updateTaskAC(todolistId, id, apiModel))
+                    if (res.data.resultCode === 0) {
+                        dispatch(updateTaskAC(todolistId, id, apiModel))
+                    } else {
+                        handleServerAppError(dispatch, res.data)
+                    }
+                })
+                .catch(e => {
+                    handleServerNetworkError(dispatch, e)
                 })
         }
     }
