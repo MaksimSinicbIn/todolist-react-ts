@@ -6,6 +6,7 @@ import { TodolistsList } from '../features/TodolistList/TodolistsList';
 import { ErrorSnackbars } from '../components/ErrorSnackbar/ErrorSnackbar';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 import { useAppSelector } from '../state/store';
+import { Outlet } from 'react-router-dom';
 
 type AppPropsType = {
     demo?: boolean
@@ -21,7 +22,8 @@ function App({demo = false}: AppPropsType) {
             <ButtonAppBar />
             {status === 'loading' && <LinearProgress color="secondary" />}
             <Container fixed>
-                <TodolistsList demo={demo}/>
+                {/* <TodolistsList demo={demo}/> */}
+                <Outlet />
             </Container>
         </div>
     );
