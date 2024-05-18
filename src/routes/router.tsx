@@ -4,6 +4,8 @@ import { Login } from "../features/Login/Login";
 import { TodolistsList } from "../features/TodolistList/TodolistsList";
 import { ErrorPage } from "../components/ErrorPage/ErrorPage";
 
+let demo
+
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -20,7 +22,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/todolists",
-                element: <TodolistsList />,
+                element: <TodolistsList demo={demo}/>,
             },
         ],
     },

@@ -2,7 +2,7 @@ import { Dispatch } from "redux"
 import { AppRootStateType } from "./store"
 import { TaskType, TasksApi, UpdateTaskModelType } from "../api/tasks-api"
 import { AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType } from "./todolists-reducer"
-import { SetErrorActionType, SetStatusActionType, setAppStatus } from "./app-reducer"
+import { SetAppStatusActionType, setAppStatus } from "./app-reducer"
 import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
 
 type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
@@ -18,8 +18,7 @@ type ActionsType =
     | RemoveTodolistActionType
     | SetTodolistsActionType
     | SetTasksACActionType
-    | SetStatusActionType
-    | SetErrorActionType
+    | SetAppStatusActionType
 
 export type TasksStateType = {
     [key: string]: TaskType[]

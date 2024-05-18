@@ -9,10 +9,12 @@ import { v1 } from 'uuid';
 import { TaskPriorities, TaskStatuses } from '../api/tasks-api';
 import { appReducer } from './app-reducer';
 import { thunk } from 'redux-thunk';
+import { authReducer } from './auth-reducer';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
+    auth: authReducer,
     app: appReducer
 })
 
@@ -73,7 +75,11 @@ const initialGlobalState: AppRootStateType = {
             }
         ]
     },
+    auth: {
+        isLoggedIn: true
+    },
     app: {
+        isInitialized: true,
         error: null,
         status: 'loading'
     }

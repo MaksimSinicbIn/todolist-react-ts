@@ -3,11 +3,11 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { Todolist } from './Todolist/Todolist';
 import { AddItemForm } from '../../components/AddItemForm/AddItemForm';
-import { useSelector } from 'react-redux';
-import { AppRootStateType, useAppDispatch } from '../../state/store';
-import { TasksStateType, addTaskTC, removeTaskTC, updateTaskTC } from '../../state/tasks-reducer';
-import { FilterValuesType, TodolistDomainType, addTodolistTC, changeTodolistFilterAC, getTodolistsTC, removeTodolistTC, updateTodolistTC } from '../../state/todolists-reducer';
+import { useAppDispatch, useAppSelector } from '../../state/store';
+import { addTaskTC, removeTaskTC, updateTaskTC } from '../../state/tasks-reducer';
+import { FilterValuesType, addTodolistTC, changeTodolistFilterAC, getTodolistsTC, removeTodolistTC, updateTodolistTC } from '../../state/todolists-reducer';
 import { TaskStatuses } from '../../api/tasks-api';
+import { Navigate } from 'react-router-dom';
 
 type TodolistListPropsType = {
     demo?: boolean
@@ -15,13 +15,14 @@ type TodolistListPropsType = {
 
 export const TodolistsList: React.FC<TodolistListPropsType> = ({demo = false, ...props}) => {
 
-    const todolists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
-    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const todolists = useAppSelector(state => state.todolists)
+    const tasks = useAppSelector(state => state.tasks)
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        if (demo) {
+        if (demo || !isLoggedIn) {
             return
         }
         dispatch(getTodolistsTC())
@@ -58,6 +59,11 @@ export const TodolistsList: React.FC<TodolistListPropsType> = ({demo = false, ..
     const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
         dispatch(updateTodolistTC(todolistId, title))
     }, [dispatch])
+
+    if (!isLoggedIn) {
+        return <Navigate to='/login'/>
+    }
+
     return (
         <div>
             <Grid container style={{ padding: '15px' }}>
