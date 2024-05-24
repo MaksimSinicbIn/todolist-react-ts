@@ -2,9 +2,10 @@ import { AnyAction, applyMiddleware, combineReducers, legacy_createStore as crea
 import { todolistsReducer } from "./todolists-reducer";
 import { tasksReducer } from "./tasks-reducer";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { ThunkDispatch, thunk } from "redux-thunk";
+import { ThunkAction, ThunkDispatch, thunk } from "redux-thunk";
 import { appReducer } from "./app-reducer";
 import { authReducer } from "./auth-reducer";
+import { configureStore, UnknownAction } from "@reduxjs/toolkit";
 
 export const rootReducer = combineReducers({
     todolists: todolistsReducer,
@@ -14,14 +15,15 @@ export const rootReducer = combineReducers({
 })
 
 //@ts-ignore
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+export const store = configureStore({reducer: rootReducer})
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 // создаем тип диспатча который принимает как AC так и TC
-type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, AnyAction>
+export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, UnknownAction>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, UnknownAction>;
 
-export const useAppDispatch = useDispatch<AppDispatchType>
+export const useAppDispatch = useDispatch<AppDispatch>
 export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
 // @ts-ignore

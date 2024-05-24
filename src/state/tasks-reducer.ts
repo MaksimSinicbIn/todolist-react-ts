@@ -1,8 +1,8 @@
 import { Dispatch } from "redux"
-import { AppRootStateType } from "./store"
+import { AppRootStateType, AppThunk } from "./store"
 import { TaskType, TasksApi, UpdateTaskModelType } from "../api/tasks-api"
 import { AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType } from "./todolists-reducer"
-import { SetAppStatusActionType, setAppStatus } from "./app-reducer"
+import { appActions } from "./app-reducer"
 import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils"
 
 type RemoveTaskActionType = ReturnType<typeof removeTaskAC>
@@ -18,7 +18,6 @@ type ActionsType =
     | RemoveTodolistActionType
     | SetTodolistsActionType
     | SetTasksACActionType
-    | SetAppStatusActionType
 
 export type TasksStateType = {
     [key: string]: TaskType[]
@@ -71,24 +70,24 @@ export const updateTaskAC = (todolistId: string, id: string, model: Partial<Upda
 }
 
 // Thunk Creators
-export const setTasksTC = (todolistId: string) => async (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatus('loading'))
+export const setTasksTC = (todolistId: string): AppThunk  => async (dispatch: Dispatch) => {
+    dispatch(appActions.setAppStatus({status: 'loading'}))
     try {
         const res = await TasksApi.getTasks(todolistId)
         dispatch(setTasksAC(todolistId, res.data.items))
-        dispatch(setAppStatus('succeeded'))
+        dispatch(appActions.setAppStatus({status: 'succeeded'}))
     } catch (e) {
         handleServerNetworkError(dispatch, e)
     }
 }
 
-export const addTaskTC = (todolistId: string, title: string) => async (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setAppStatus('loading'))
+export const addTaskTC = (todolistId: string, title: string): AppThunk  => async (dispatch: Dispatch) => {
+    dispatch(appActions.setAppStatus({status: 'loading'}))
     try {
         const res = await TasksApi.createTasks(todolistId, title)
         if (res.data.resultCode === 0) {
             dispatch(addTaskAC(res.data.data.item))
-            dispatch(setAppStatus('succeeded'))
+            dispatch(appActions.setAppStatus({status: 'succeeded'}))
         } else {
             handleServerAppError(dispatch, res.data)
         }
@@ -97,7 +96,7 @@ export const addTaskTC = (todolistId: string, title: string) => async (dispatch:
     }
 }
 
-export const removeTaskTC = (todolistId: string, id: string) => async (dispatch: Dispatch<ActionsType>) => {
+export const removeTaskTC = (todolistId: string, id: string): AppThunk  => async (dispatch: Dispatch) => {
     try {
         const res = await TasksApi.deleteTasks(todolistId, id)
         if (res.data.resultCode === 0) {
@@ -110,8 +109,8 @@ export const removeTaskTC = (todolistId: string, id: string) => async (dispatch:
     }
 }
 
-export const updateTaskTC = (todolistId: string, id: string, domainModel: Partial<UpdateTaskModelType>) => {
-    return async (dispatch: Dispatch<ActionsType>, getState: () => AppRootStateType) => {
+export const updateTaskTC = (todolistId: string, id: string, domainModel: Partial<UpdateTaskModelType>): AppThunk  => {
+    return async (dispatch: Dispatch, getState: () => AppRootStateType) => {
         const tasks = getState().tasks
         const task = tasks[todolistId].find(t => t.id === id)
         if (!task) {
