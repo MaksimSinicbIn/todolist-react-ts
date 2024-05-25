@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import './App.css';
 import Container from '@mui/material/Container';
 import { ButtonAppBar } from '../components/ButtonAppBar/ButtonAppBar';
-import { ErrorSnackbars } from '../components/ErrorSnackbar/ErrorSnackbar';
+import { ErrorSnackbar } from '../components/ErrorSnackbar/ErrorSnackbar';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 import { useAppDispatch, useAppSelector } from '../state/store';
 import { Outlet } from 'react-router-dom';
 import { meTC } from '../state/auth-reducer';
-import { RequestStatusType } from '../state/app-reducer';
+import { selectIsInitialized, selectStatus } from '../state/app-reducer';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 
 type AppPropsType = {
@@ -16,13 +16,15 @@ type AppPropsType = {
 
 function App({demo = false}: AppPropsType) {
 
-    const status = useAppSelector<RequestStatusType>(state => state.app.status)
-    const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
+    const status = useAppSelector(selectStatus)
+    const isInitialized = useAppSelector(selectIsInitialized)
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(meTC())
+        if (!demo) {
+            dispatch(meTC())
+        }
     }, [])
 
     if (!isInitialized) {
@@ -35,7 +37,7 @@ function App({demo = false}: AppPropsType) {
 
     return (
         <div className="App">
-            <ErrorSnackbars />
+            <ErrorSnackbar />
             <ButtonAppBar />
             {status === 'loading' && <LinearProgress color="secondary" />}
             <Container fixed>

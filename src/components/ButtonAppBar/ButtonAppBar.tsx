@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppDispatch, useAppSelector } from '../../state/store';
-import { logOutTC } from '../../state/auth-reducer';
+import { logOutTC, selectIsLoggedIn } from '../../state/auth-reducer';
 
 type ButtonAppBarProps = {
     
@@ -15,7 +15,7 @@ type ButtonAppBarProps = {
 
 export const ButtonAppBar = (props: ButtonAppBarProps) => {
 
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
     const dispatch = useAppDispatch()
 

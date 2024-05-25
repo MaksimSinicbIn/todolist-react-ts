@@ -9,7 +9,6 @@ import { AppThunk } from './store'
 const initialState = {
     isLoggedIn: false,
 }
-type InitialStateType = typeof initialState
 
 const slice = createSlice({
     name: 'auth',
@@ -18,11 +17,15 @@ const slice = createSlice({
         setIsLoggedIn: (state, action: PayloadAction<{ isLoggedIn: boolean }>) => {
             state.isLoggedIn = action.payload.isLoggedIn
         }
+    },
+    selectors: {
+        selectIsLoggedIn: (state) => state.isLoggedIn
     }
 })
 
 export const authReducer = slice.reducer
 export const authActions = slice.actions
+export const { selectIsLoggedIn } = slice.selectors
 
 // Thunk Creators
 export const meTC = (): AppThunk => async (dispatch: Dispatch) => {

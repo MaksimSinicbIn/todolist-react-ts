@@ -2,15 +2,16 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { AppRootStateType } from './store';
-import { applyMiddleware, combineReducers, legacy_createStore } from 'redux';
+import { combineReducers } from 'redux';
 import { tasksReducer } from './tasks-reducer';
 import { todolistsReducer } from './todolists-reducer';
 import { v1 } from 'uuid';
 import { TaskPriorities, TaskStatuses } from '../api/tasks-api';
 import { appReducer } from './app-reducer';
-import { thunk } from 'redux-thunk';
 import { authReducer } from './auth-reducer';
 import { HashRouter } from 'react-router-dom';
+import { configureStore } from '@reduxjs/toolkit';
+
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -82,12 +83,15 @@ const initialGlobalState: AppRootStateType = {
     app: {
         isInitialized: true,
         error: null,
-        status: 'loading'
+        status: 'succeeded'
     }
 };
 
 //@ts-ignore
-export const storyBookStore = legacy_createStore(rootReducer, initialGlobalState, applyMiddleware(thunk));
+export const storyBookStore = configureStore({
+    reducer: rootReducer,
+    preloadedState: initialGlobalState
+})
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
     return <Provider store={storyBookStore}>{storyFn()}</Provider>

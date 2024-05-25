@@ -4,10 +4,11 @@ import Paper from '@mui/material/Paper';
 import { Todolist } from './Todolist/Todolist';
 import { AddItemForm } from '../../components/AddItemForm/AddItemForm';
 import { useAppDispatch, useAppSelector } from '../../state/store';
-import { addTaskTC, removeTaskTC, updateTaskTC } from '../../state/tasks-reducer';
-import { FilterValuesType, addTodolistTC, changeTodolistFilterAC, getTodolistsTC, removeTodolistTC, updateTodolistTC } from '../../state/todolists-reducer';
+import { addTaskTC, removeTaskTC, selectTasks, updateTaskTC } from '../../state/tasks-reducer';
+import { FilterValuesType, addTodolistTC, getTodolistsTC, removeTodolistTC, selectTodolists, todolistsActions, updateTodolistTC } from '../../state/todolists-reducer';
 import { TaskStatuses } from '../../api/tasks-api';
 import { Navigate } from 'react-router-dom';
+import { selectIsLoggedIn } from '../../state/auth-reducer';
 
 type TodolistListPropsType = {
     demo?: boolean
@@ -15,9 +16,9 @@ type TodolistListPropsType = {
 
 export const TodolistsList: React.FC<TodolistListPropsType> = ({demo = false, ...props}) => {
 
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const todolists = useAppSelector(state => state.todolists)
-    const tasks = useAppSelector(state => state.tasks)
+    const isLoggedIn = useAppSelector(selectIsLoggedIn)
+    const todolists = useAppSelector(selectTodolists)
+    const tasks = useAppSelector(selectTasks)
 
     const dispatch = useAppDispatch()
 
@@ -53,7 +54,7 @@ export const TodolistsList: React.FC<TodolistListPropsType> = ({demo = false, ..
     }, [dispatch])
 
     const changeTodolistFilter = useCallback((todolistId: string, filter: FilterValuesType) => {
-        dispatch(changeTodolistFilterAC(todolistId, filter))
+        dispatch(todolistsActions.changeTodolistFilter({id: todolistId, newFilter: filter}))
     }, [dispatch])
 
     const changeTodolistTitle = useCallback((todolistId: string, title: string) => {

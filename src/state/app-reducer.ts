@@ -23,8 +23,14 @@ const slice = createSlice({
         setInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
             state.isInitialized = action.payload.isInitialized
         },
+    },
+    selectors: {
+        selectError: (state) => state.error,
+        selectStatus: (state) => state.status,
+        selectIsInitialized: (state) => state.isInitialized,
     }
 })
 
 export const appReducer = slice.reducer
 export const appActions = slice.actions
+export const { selectError, selectStatus, selectIsInitialized } = slice.selectors
