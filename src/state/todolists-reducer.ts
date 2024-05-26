@@ -4,6 +4,7 @@ import { RequestStatusType, appActions } from "./app-reducer";
 import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils";
 import { AppThunk } from "./store";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { setTasksTC } from "./tasks-reducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -48,6 +49,9 @@ const slice = createSlice({
         setTodolists: (state, action: PayloadAction<{ todolists: TodolistApiType[] }>) => {
             // return action.payload.todolists.map((tl) => ({...tl, filter: "all", entityStatus: "idle"})); // вариант проще и не запрещено докой по тулкиту
             action.payload.todolists.forEach(tl => {state.push({ ...tl, filter: 'all', entityStatus: 'idle' })})
+        },
+        clearData: () => {
+            return []
         }
     },
     selectors: {
@@ -60,12 +64,15 @@ export const todolistsActions = slice.actions
 export const { selectTodolists } = slice.selectors
 
 // Thunk Creators
-export const getTodolistsTC = (): AppThunk => async (dispatch: Dispatch) => {
+export const getTodolistsTC = (): AppThunk => async (dispatch) => {
     dispatch(appActions.setAppStatus({status: 'loading'}))
     try {
         const res = await TodolistApi.getTodolists()
         dispatch(todolistsActions.setTodolists({todolists: res.data}))
         dispatch(appActions.setAppStatus({status: 'succeeded'}))
+        res.data.forEach( tl => {
+            dispatch(setTasksTC(tl.id))
+        })
     } catch (e) {
         handleServerNetworkError(dispatch, e)
     }
