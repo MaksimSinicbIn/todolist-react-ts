@@ -1,8 +1,8 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import App from "../app/App";
-import { Login } from "../features/Login/Login";
-import { TodolistsList } from "../features/TodolistList/TodolistsList";
-import { ErrorPage } from "../components/ErrorPage/ErrorPage";
+import App from "app/App";
+import { ErrorPage } from "common/components";
+import { Login } from "features/auth/ui/Login";
+import { TodolistsList } from "features/TodolistList/TodolistsList";
 
 let demo
 

@@ -2,13 +2,13 @@ import React, { memo, useCallback, useEffect, useMemo } from 'react';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { FilterValuesType, TodolistDomainType } from 'state/todolists-reducer';
-import { EditableSpan } from 'components/EditableSpan/EditableSpan';
-import { AddItemForm } from 'components/AddItemForm/AddItemForm';
 import { Task } from './Task/Task';
-import { TaskStatuses, TaskType } from 'api/tasks-api';
-import { useAppDispatch } from 'state/store';
-import { tasksThunks } from 'state/tasks-reducer';
+import { FilterValuesType, TodolistDomainType } from '../todolists-reducer';
+import { tasksThunks } from '../tasks-reducer';
+import { useAppDispatch } from 'common/hooks';
+import { AddItemForm, EditableSpan } from 'common/components';
+import { TaskStatuses } from 'common/enums';
+import { TaskType } from '../tasks-api';
 
 
 

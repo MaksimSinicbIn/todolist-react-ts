@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { Todolist } from './Todolist/Todolist';
-import { AddItemForm } from 'components/AddItemForm/AddItemForm';
-import { useAppDispatch, useAppSelector } from 'state/store';
-import { FilterValuesType, selectTodolists, todolistsActions, todolistsThunks } from 'state/todolists-reducer';
-import { TaskStatuses } from 'api/tasks-api';
 import { Navigate } from 'react-router-dom';
-import { selectIsLoggedIn } from 'state/auth-reducer';
-import { selectTasks, tasksThunks } from 'state/tasks-reducer';
-
+import { Todolist } from './Todolist/Todolist';
+import { AddItemForm } from 'common/components';
+import { selectTasks, tasksThunks } from './tasks-reducer';
+import { selectIsLoggedIn } from '../auth/model/auth-reducer';
+import { FilterValuesType, selectTodolists, todolistsActions, todolistsThunks } from './todolists-reducer';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { TaskStatuses } from 'common/enums';
 
 type TodolistListPropsType = {
     demo?: boolean

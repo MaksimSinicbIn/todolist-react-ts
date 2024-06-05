@@ -3,11 +3,10 @@ import './App.css';
 import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
-import { ButtonAppBar } from 'components/ButtonAppBar/ButtonAppBar';
-import { ErrorSnackbar } from 'components/ErrorSnackbar/ErrorSnackbar';
-import { meTC } from 'state/auth-reducer';
-import { useAppDispatch, useAppSelector } from 'state/store';
-import { selectIsInitialized, selectStatus } from 'state/app-reducer';
+import { selectIsInitialized, selectStatus } from 'app/app-reducer';
+import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { authThunks } from 'features/auth/model/auth-reducer';
+import { ButtonAppBar, ErrorSnackbar } from 'common/components';
 import { Outlet } from 'react-router-dom';
 
 type AppPropsType = {
@@ -23,7 +22,7 @@ function App({ demo = false }: AppPropsType) {
 
     useEffect(() => {
         if (!demo) {
-            dispatch(meTC())
+            dispatch(authThunks.me())
         }
     }, [])
 
