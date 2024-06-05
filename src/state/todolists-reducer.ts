@@ -1,10 +1,12 @@
 import { TodolistApi, TodolistApiType } from "../api/todolist-api";
 import { Dispatch } from "redux";
 import { RequestStatusType, appActions } from "./app-reducer";
-import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils";
+import { handleServerAppError } from "../utils/handleServerAppError";
 import { AppThunk } from "./store";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { setTasksTC } from "./tasks-reducer";
+
+import { handleServerNetworkError } from "utils/handleServerNetworError";
+import { tasksThunks } from "./tasks-reducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -71,7 +73,7 @@ export const getTodolistsTC = (): AppThunk => async (dispatch) => {
         dispatch(todolistsActions.setTodolists({todolists: res.data}))
         dispatch(appActions.setAppStatus({status: 'succeeded'}))
         res.data.forEach( tl => {
-            dispatch(setTasksTC(tl.id))
+            dispatch(tasksThunks.fetchTasks(tl.id))
         })
     } catch (e) {
         handleServerNetworkError(dispatch, e)

@@ -1,5 +1,6 @@
+import { ActionForTest } from 'components/types/ActionForTest';
 import { TaskPriorities, TaskStatuses } from '../api/tasks-api';
-import { TasksStateType, tasksActions, tasksReducer} from './tasks-reducer'
+import { TasksStateType, tasksActions, tasksReducer, tasksThunks} from './tasks-reducer'
 import { todolistsActions } from './todolists-reducer';
 
 
@@ -87,7 +88,12 @@ beforeEach(() => {
 
 test('correct task should be deleted from correct array', () => {
 
-    const action = tasksActions.removeTask({todolistId: 'todolistId2', id: '2'})
+    const action: ActionForTest<typeof tasksThunks.removeTask.fulfilled> = {
+        type: tasksThunks.removeTask.fulfilled.type,
+        payload: {
+            todolistId: 'todolistId2', taskId: '2'
+        }
+    }
 
     const endState = tasksReducer(startState, action)
 
@@ -98,18 +104,21 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
 
-    const action = tasksActions.addTask({task: {
-        id: '3',
-        title: 'juice',
-        status: TaskStatuses.New,
-        todoListId: 'todolistId2',
-        description: '',
-        priority: TaskPriorities.Low,
-        order: 0,
-        startDate: '',
-        deadline: '',
-        addedDate: ''
-    }})
+    const action: ActionForTest<typeof tasksThunks.addTask.fulfilled> = {
+        type: tasksThunks.addTask.fulfilled.type,
+        payload: {task: {
+            id: '3',
+            title: 'juice',
+            status: TaskStatuses.New,
+            todoListId: 'todolistId2',
+            description: '',
+            priority: TaskPriorities.Low,
+            order: 0,
+            startDate: '',
+            deadline: '',
+            addedDate: ''
+        }}
+    }
 
     const endState = tasksReducer(startState, action)
 
@@ -122,7 +131,12 @@ test('correct task should be added to correct array', () => {
 
 test('status of specified task should be changed', () => {
 
-    const action = tasksActions.updateTask({todolistId: 'todolistId2', id: '2', model: {status: TaskStatuses.New} })
+    const action: ActionForTest<typeof tasksThunks.updateTask.fulfilled> = {
+        type: tasksThunks.updateTask.fulfilled.type,
+        payload: {
+            todolistId: 'todolistId2', taskId: '2', domainModel: {status: TaskStatuses.New}
+        }
+    }
 
     const endState = tasksReducer(startState, action)
 
@@ -132,7 +146,12 @@ test('status of specified task should be changed', () => {
 
 test('title of specified task should be changed', () => {
 
-    const action = tasksActions.updateTask({todolistId: 'todolistId2', id: '2', model: { title: 'beer'}})
+    const action: ActionForTest<typeof tasksThunks.updateTask.fulfilled> = {
+        type: tasksThunks.updateTask.fulfilled.type,
+        payload: {
+            todolistId: 'todolistId2', taskId: '2', domainModel: { title: 'beer'}
+        }
+    }
 
     const endState = tasksReducer(startState, action)
 
@@ -188,10 +207,14 @@ test('property with todolistId should be deleted', () => {
 })
 
 test('tasks should be added for todolist', () => {
-    const action = tasksActions.setTasks({todolistId: 'todolistId3', tasks: [
-        { id: '1', title: 'REACT', status: TaskStatuses.New, priority: TaskPriorities.Low, description: '', order: 0, deadline: '', startDate: '', addedDate: '', todoListId: 'todolistId1' },
-        { id: '2', title: 'REDUX', status: TaskStatuses.New, priority: TaskPriorities.Low, description: '', order: 0, deadline: '', startDate: '', addedDate: '', todoListId: 'todolistId1' }
-    ]})
+
+    const action: ActionForTest<typeof tasksThunks.fetchTasks.fulfilled> = {
+        type: tasksThunks.fetchTasks.fulfilled.type,
+        payload: {todolistId: 'todolistId3', tasks: [
+            { id: '1', title: 'REACT', status: TaskStatuses.New, priority: TaskPriorities.Low, description: '', order: 0, deadline: '', startDate: '', addedDate: '', todoListId: 'todolistId1' },
+            { id: '2', title: 'REDUX', status: TaskStatuses.New, priority: TaskPriorities.Low, description: '', order: 0, deadline: '', startDate: '', addedDate: '', todoListId: 'todolistId1' }
+        ]}
+    }
 
     const endState = tasksReducer(startState, action)
 

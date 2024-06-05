@@ -1,11 +1,12 @@
 import { Dispatch } from 'redux'
 import { appActions } from './app-reducer'
 import { AuthApi } from '../api/auth-api'
-import { handleServerAppError, handleServerNetworkError } from '../utils/error-utils'
+import { handleServerAppError,  } from '../utils/handleServerAppError'
 import { LoginType } from '../features/Login/Login'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { AppThunk } from './store'
 import { todolistsActions } from './todolists-reducer'
+import { handleServerNetworkError } from 'utils/handleServerNetworError'
 
 const initialState = {
     isLoggedIn: false,
@@ -24,9 +25,7 @@ const slice = createSlice({
     }
 })
 
-export const authReducer = slice.reducer
-export const authActions = slice.actions
-export const { selectIsLoggedIn } = slice.selectors
+
 
 // Thunk Creators
 export const meTC = (): AppThunk => async (dispatch: Dispatch) => {
@@ -77,3 +76,6 @@ export const logOutTC = (): AppThunk => async (dispatch: Dispatch) => {
     }
 }
 
+export const authReducer = slice.reducer
+export const authActions = slice.actions
+export const { selectIsLoggedIn } = slice.selectors

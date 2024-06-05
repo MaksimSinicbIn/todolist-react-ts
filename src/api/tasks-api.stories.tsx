@@ -40,7 +40,7 @@ export const CreateTask = () => {
     const [title, setTitle] = useState<string>('')
 
     const createTask = () => {
-        TasksApi.createTasks(todolistId, title)
+        TasksApi.createTasks({todolistId, title})
             .then((res) => {
                 setState(res.data)
             })

@@ -2,12 +2,14 @@ import React, { memo, useCallback, useMemo } from 'react';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
-import { FilterValuesType, TodolistDomainType } from '../../../state/todolists-reducer';
-import { EditableSpan } from '../../../components/EditableSpan/EditableSpan';
-import { AddItemForm } from '../../../components/AddItemForm/AddItemForm';
+import { FilterValuesType, TodolistDomainType } from 'state/todolists-reducer';
+import { EditableSpan } from 'components/EditableSpan/EditableSpan';
+import { AddItemForm } from 'components/AddItemForm/AddItemForm';
 import { Task } from './Task/Task';
-import { TaskStatuses, TaskType } from '../../../api/tasks-api';
-import { useAppDispatch } from '../../../state/store';
+import { TaskStatuses, TaskType } from 'api/tasks-api';
+import { useAppDispatch } from 'state/store';
+
+
 
 type PropsType = {
     todolist: TodolistDomainType

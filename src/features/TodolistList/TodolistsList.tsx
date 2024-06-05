@@ -4,11 +4,12 @@ import Paper from '@mui/material/Paper';
 import { Todolist } from './Todolist/Todolist';
 import { AddItemForm } from '../../components/AddItemForm/AddItemForm';
 import { useAppDispatch, useAppSelector } from '../../state/store';
-import { addTaskTC, removeTaskTC, selectTasks, updateTaskTC } from '../../state/tasks-reducer';
-import { FilterValuesType, addTodolistTC, getTodolistsTC, removeTodolistTC, selectTodolists, todolistsActions, updateTodolistTC } from '../../state/todolists-reducer';
+import { FilterValuesType, addTodolistTC, getTodolistsTC, removeTodolistTC, selectTodolists, todolistsActions, updateTodolistTC } from 'state/todolists-reducer';
 import { TaskStatuses } from '../../api/tasks-api';
 import { Navigate } from 'react-router-dom';
-import { selectIsLoggedIn } from '../../state/auth-reducer';
+import { selectIsLoggedIn } from 'state/auth-reducer';
+import { selectTasks, tasksThunks } from 'state/tasks-reducer';
+
 
 type TodolistListPropsType = {
     demo?: boolean
@@ -30,19 +31,19 @@ export const TodolistsList: React.FC<TodolistListPropsType> = ({demo = false, ..
     }, [])
 
     const addTask = useCallback((todolistId: string, title: string) => {
-        dispatch(addTaskTC(todolistId, title))
+        dispatch(tasksThunks.addTask({todolistId, title}))
     }, [dispatch])
 
     const removeTask = useCallback((todolistId: string, taskId: string) => {
-        dispatch(removeTaskTC(todolistId, taskId))
+        dispatch(tasksThunks.removeTask({todolistId, taskId}))
     }, [dispatch])
 
     const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
-        dispatch(updateTaskTC(todolistId, taskId, { status }))
+        dispatch(tasksThunks.updateTask({todolistId, taskId, domainModel: { status }}))
     }, [dispatch])
 
     const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
-        dispatch(updateTaskTC(todolistId, taskId, { title }))
+        dispatch(tasksThunks.updateTask({todolistId, taskId, domainModel: { title }}))
     }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
