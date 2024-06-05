@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import Container from '@mui/material/Container';
-import { ButtonAppBar } from '../components/ButtonAppBar/ButtonAppBar';
-import { ErrorSnackbar } from '../components/ErrorSnackbar/ErrorSnackbar';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
-import { useAppDispatch, useAppSelector } from '../state/store';
-import { Outlet } from 'react-router-dom';
-import { meTC } from '../state/auth-reducer';
-import { selectIsInitialized, selectStatus } from '../state/app-reducer';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
+import { ButtonAppBar } from 'components/ButtonAppBar/ButtonAppBar';
+import { ErrorSnackbar } from 'components/ErrorSnackbar/ErrorSnackbar';
+import { meTC } from 'state/auth-reducer';
+import { useAppDispatch, useAppSelector } from 'state/store';
+import { selectIsInitialized, selectStatus } from 'state/app-reducer';
+import { Outlet } from 'react-router-dom';
 
 type AppPropsType = {
     demo?: boolean
 }
 
-function App({demo = false}: AppPropsType) {
+function App({ demo = false }: AppPropsType) {
 
     const status = useAppSelector(selectStatus)
     const isInitialized = useAppSelector(selectIsInitialized)

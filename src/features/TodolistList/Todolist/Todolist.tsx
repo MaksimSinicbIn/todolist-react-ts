@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
+import React, { memo, useCallback, useEffect, useMemo } from 'react';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
@@ -8,6 +8,7 @@ import { AddItemForm } from 'components/AddItemForm/AddItemForm';
 import { Task } from './Task/Task';
 import { TaskStatuses, TaskType } from 'api/tasks-api';
 import { useAppDispatch } from 'state/store';
+import { tasksThunks } from 'state/tasks-reducer';
 
 
 
@@ -15,8 +16,8 @@ type PropsType = {
     todolist: TodolistDomainType
     tasks: TaskType[]
     addTask: (todolistId: string, title: string) => void
-    removeTask: (todolistId: string, taskId: string ) => void
-    changeTaskStatus: (todolistId: string, id: string , status: TaskStatuses) => void
+    removeTask: (todolistId: string, taskId: string) => void
+    changeTaskStatus: (todolistId: string, id: string, status: TaskStatuses) => void
     changeTaskTitle: (todolistId: string, id: string, newTitle: string) => void
     removeTodolist: (id: string) => void
     changeTodolistFilter: (todolistId: string, filter: FilterValuesType) => void
@@ -24,23 +25,23 @@ type PropsType = {
     demo?: boolean
 }
 
-export const Todolist = memo(({demo = false, ...props}: PropsType) => {
+export const Todolist = memo(({ demo = false, ...props }: PropsType) => {
 
     const dispatch = useAppDispatch()
 
-    // useEffect(() => {
-    //     if (demo) {
-    //         return
-    //     }
-    //     dispatch(setTasksTC(props.todolist.id))
-    // }, [])
+    useEffect(() => {
+        if (demo) {
+            return
+        }
+        dispatch(tasksThunks.fetchTasks(props.todolist.id))
+    }, [])
 
     const addTask = useCallback((title: string) => {
         props.addTask(props.todolist.id, title)
     }, [props.addTask, props.todolist.id])
 
     const changeTodolistTitle = useCallback((title: string) => {
-        props.changeTodolistTitle(props.todolist.id, title )
+        props.changeTodolistTitle(props.todolist.id, title)
     }, [props.changeTodolistTitle, props.todolist.id])
 
     const removeTodolist = () => {
@@ -51,19 +52,19 @@ export const Todolist = memo(({demo = false, ...props}: PropsType) => {
     const onActiveClickHandler = useCallback(() => props.changeTodolistFilter(props.todolist.id, "active"), [props.changeTodolistFilter, props.todolist.id])
     const onCompletedClickHandler = useCallback(() => props.changeTodolistFilter(props.todolist.id, "completed"), [props.changeTodolistFilter, props.todolist.id])
 
-    
-        let tasks = props.tasks;
 
-        tasks = useMemo( () => {
-            if (props.todolist.filter === "active") {
-                tasks = tasks.filter(t => t.status === TaskStatuses.New);
-            }
-            if (props.todolist.filter === "completed") {
-                tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
-            }
-            return tasks
-        }, [props.todolist.filter, props.tasks])
-        
+    let tasks = props.tasks;
+
+    tasks = useMemo(() => {
+        if (props.todolist.filter === "active") {
+            tasks = tasks.filter(t => t.status === TaskStatuses.New);
+        }
+        if (props.todolist.filter === "completed") {
+            tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
+        }
+        return tasks
+    }, [props.todolist.filter, props.tasks])
+
 
     return (
         <div>

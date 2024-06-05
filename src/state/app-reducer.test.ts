@@ -1,6 +1,7 @@
 import { InitialStateType, appActions, appReducer } from "./app-reducer"
 
 let startState: InitialStateType
+
 beforeEach(() => {
     startState = {
         isInitialized: false,

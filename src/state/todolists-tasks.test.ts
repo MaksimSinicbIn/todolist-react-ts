@@ -1,7 +1,8 @@
+import { ActionForTest } from "components/types/ActionForTest";
 import { TaskPriorities, TaskStatuses } from "../api/tasks-api";
 import { TodolistApiType } from "../api/todolist-api";
 import { TasksStateType, tasksReducer } from "./tasks-reducer"
-import { TodolistDomainType, todolistsActions, todolistsReducer } from "./todolists-reducer"
+import { TodolistDomainType, todolistsActions, todolistsReducer, todolistsThunks } from "./todolists-reducer"
 
 test('ids should be equals', () => {
     const startTasksState: TasksStateType = {}
@@ -14,7 +15,10 @@ test('ids should be equals', () => {
         order: 0
     }
 
-    const action = todolistsActions.addTodolist({todolist})
+    const action: ActionForTest<typeof todolistsThunks.addTodolist.fulfilled> = {
+        type: todolistsThunks.addTodolist.fulfilled.type,
+        payload: {todolist}
+    }
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todolistsReducer(startTodolistsState, action)
@@ -107,7 +111,12 @@ test('property with todolistId should be deleted', () => {
         ]
     }
 
-    const action = todolistsActions.removeTodolist({id: 'todolistId2'})
+    const action: ActionForTest<typeof todolistsThunks.removeTodolist.fulfilled> = {
+        type: todolistsThunks.removeTodolist.fulfilled.type,
+        payload: {
+            id: 'todolistId2'
+        }
+    }
 
     const endState = tasksReducer(startState, action)
 

@@ -1,7 +1,7 @@
 import { ActionForTest } from 'components/types/ActionForTest';
 import { TaskPriorities, TaskStatuses } from '../api/tasks-api';
 import { TasksStateType, tasksActions, tasksReducer, tasksThunks} from './tasks-reducer'
-import { todolistsActions } from './todolists-reducer';
+import { todolistsActions, todolistsThunks } from './todolists-reducer';
 
 
 let startState: TasksStateType = {}
@@ -161,12 +161,15 @@ test('title of specified task should be changed', () => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const action = todolistsActions.addTodolist({todolist: {
-        id: '1',
-        title: 'What to learn',
-        addedDate: '',
-        order: 0
-    }})
+    const action: ActionForTest<typeof todolistsThunks.addTodolist.fulfilled> = {
+        type: todolistsThunks.addTodolist.fulfilled.type,
+        payload: {todolist: {
+            id: '1',
+            title: 'What to learn',
+            addedDate: '',
+            order: 0
+        }}
+    }
 
     const endState = tasksReducer(startState, action)
 
@@ -182,10 +185,13 @@ test('new array should be added when new todolist is added', () => {
 
 test('empty arrays should be added when we set todolists', () => {
 
-    const action = todolistsActions.setTodolists({todolists: [
-        {id: '1', title: 'What to learn', addedDate: '', order: 0},
-        {id: '2', title: 'What to buy', addedDate: '', order: 0}
-    ]})
+    const action: ActionForTest<typeof todolistsThunks.fetchTodolists.fulfilled> = {
+        type: todolistsThunks.fetchTodolists.fulfilled.type,
+        payload: {todolists: [
+            {id: '1', title: 'What to learn', addedDate: '', order: 0},
+            {id: '2', title: 'What to buy', addedDate: '', order: 0}
+        ]}
+    }
 
     const endState = tasksReducer({}, action)
 
@@ -197,7 +203,13 @@ test('empty arrays should be added when we set todolists', () => {
 })
 
 test('property with todolistId should be deleted', () => {
-    const action = todolistsActions.removeTodolist({id: "todolistId2"});
+
+    const action: ActionForTest<typeof todolistsThunks.removeTodolist.fulfilled> = {
+        type: todolistsThunks.removeTodolist.fulfilled.type,
+        payload: {
+            id: "todolistId2"
+        }
+    }
 
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState);
