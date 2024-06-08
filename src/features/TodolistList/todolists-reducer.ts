@@ -60,7 +60,7 @@ const slice = createSlice({
 })
 
 // Thunk
-const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistApiType[] }, void>(`${slice.name}/fetchTodolists`, async (arg, thunkApi) => {
+const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistApiType[] }, void>(`${slice.name}/fetchTodolists`, async (_, thunkApi) => {
     const { dispatch, rejectWithValue } = thunkApi
     try {
         dispatch(appActions.setAppStatus({ status: 'loading' }))

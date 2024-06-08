@@ -1,5 +1,6 @@
-import { instance } from "common/instance/instance"
 import { BaseResponseType } from "common/types"
+import { instance } from "common/instance"
+
 
 export type TodolistApiType = {
     "id": string

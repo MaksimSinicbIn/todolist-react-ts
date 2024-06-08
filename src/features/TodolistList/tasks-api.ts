@@ -1,6 +1,8 @@
 import { TaskPriorities, TaskStatuses } from "common/enums";
-import { instance } from "common/instance/instance";
 import { BaseResponseType } from "common/types";
+import { instance } from "common/instance";
+
+
 
 type GetTasksResponse = {
     error: string | null

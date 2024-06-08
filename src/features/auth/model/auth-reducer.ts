@@ -32,12 +32,13 @@ const slice = createSlice({
 })
 
 // Thunk
-const me = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(`${slice.name}/me`, async (arg, thunkApi) => {
+const me = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(`${slice.name}/me`, async (_, thunkApi) => {
     const { dispatch, rejectWithValue } = thunkApi
     try {
         dispatch(appActions.setAppStatus({status: 'loading'}))
         const res = await AuthApi.me()
         if (res.data.resultCode === ResultCode.success) {
+            dispatch(appActions.setAppStatus({status: 'succeeded'}))
             return {isLoggedIn: true}
         } else {
             handleServerAppError(dispatch, res.data)
@@ -69,7 +70,7 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginType>(`${slice.n
     }
 })
 
-const logOut = createAppAsyncThunk<{ isLoggedIn: false }, void>(`${slice.name}/logOut`, async (arg, thunkApi) => {
+const logOut = createAppAsyncThunk<{ isLoggedIn: false }, void>(`${slice.name}/logOut`, async (_, thunkApi) => {
     const { dispatch, rejectWithValue } = thunkApi
     try {
         dispatch(appActions.setAppStatus({status: 'loading'}))
