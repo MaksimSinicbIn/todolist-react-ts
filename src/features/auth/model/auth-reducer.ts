@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { appActions } from "app/app-reducer";
 import { AuthApi } from "../api/auth-api";
 import { LoginType } from "../api/auth-api.types";
-import { todolistsActions } from "features/TodolistList/todolists-reducer";
+import { todolistsActions } from "features/TodolistList/model/todolists/todolists-reducer";
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "common/utils";
 import { ResultCode } from "common/enums";
 
