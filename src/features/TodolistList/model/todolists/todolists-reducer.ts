@@ -2,7 +2,7 @@ import { ArgUpdateTodolistType, TodolistApi, TodolistApiType } from "features/To
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RequestStatusType, appActions } from "app/app-reducer";
 import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "common/utils";
-import { ResultCode } from "common/enums/enums";
+import { ResultCode } from "common/enums";
 
 export type FilterValuesType = "all" | "active" | "completed";
 

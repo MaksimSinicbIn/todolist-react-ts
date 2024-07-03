@@ -3,7 +3,7 @@ import { appActions } from "app/app-reducer"
 import { createAppAsyncThunk, handleServerNetworkError, handleServerAppError } from "common/utils"
 import { TaskType, TasksApi, ArgsAddType, ArgsRemoveTaskType, ArgsUpdateTaskType, UpdateTaskModelType } from "features/TodolistList/api/tasks-api"
 import { todolistsActions, todolistsThunks } from "../todolists/todolists-reducer"
-import { ResultCode } from "common/enums/enums"
+import { ResultCode } from "common/enums"
 
 export type TasksStateType = {
     [key: string]: TaskType[]
