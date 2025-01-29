@@ -79,6 +79,7 @@
     "puppeteer": "^22.7.1",
     "start-server-and-test": "^2.0.3",
     "storybook": "^8.0.9",
+    "tsconfig-paths-webpack-plugin": "^4.2.0",
     "webpack": "5.91.0"
   },
   "jest": {
