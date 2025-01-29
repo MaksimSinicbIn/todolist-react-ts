@@ -1,9 +1,9 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import App from './App';
-import {HashRouterStoreDecorator, ReduxStoreProviderDecorator} from './ReduxStoreProviderDecorator';
+import {ReduxStoreProviderDecorator} from './ReduxStoreProviderDecorator';
 
 const meta: Meta<typeof App> = {
-    title: 'TODOLISTS/App',
+    title: 'APP/App',
     component: App,
     parameters: {
         layout: 'centered',
@@ -12,10 +12,11 @@ const meta: Meta<typeof App> = {
     args: {
         demo: true
     },
-    decorators: [ReduxStoreProviderDecorator, HashRouterStoreDecorator]
-};
+    decorators: [ReduxStoreProviderDecorator]
+}
 
 export default meta;
-type Story = StoryObj<typeof App>;
+
+type Story = StoryObj<typeof meta>;
 
 export const AppStory: Story = {};
