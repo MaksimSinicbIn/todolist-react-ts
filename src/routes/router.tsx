@@ -5,7 +5,7 @@ import { Login } from "features/auth/ui/Login";
 import { TodolistsList } from "features/TodolistList/ui/TodolistsList";
 
 
-let demo
+// let demo = true
 
 export const router = createBrowserRouter([
     {
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/todolists",
-                element: <TodolistsList demo={demo}/>,
+                element: <TodolistsList />,
             },
         ],
     },

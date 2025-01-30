@@ -40,7 +40,7 @@ function App({ demo = false }: AppPropsType) {
             <ButtonAppBar />
             {status === 'loading' && <LinearProgress color="secondary" />}
             <Container fixed>
-                <Outlet />
+                <Outlet context={demo}/>
             </Container>
         </div>
     );

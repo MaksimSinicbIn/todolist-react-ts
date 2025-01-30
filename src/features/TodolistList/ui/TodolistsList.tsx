@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useOutletContext } from 'react-router-dom';
 import { Todolist } from './Todolist/Todolist';
 import { AddItemForm } from 'common/components';
 import { selectTasks, tasksThunks } from '../model/tasks/tasks-reducer';
@@ -12,16 +12,18 @@ import { TaskStatuses } from 'common/enums';
 
 
 type TodolistListPropsType = {
-    demo?: boolean
+    //demo?: boolean
 }
 
-export const TodolistsList: React.FC<TodolistListPropsType> = ({ demo = false, ...props }) => {
+export const TodolistsList: React.FC<TodolistListPropsType> = ({...props }) => {
 
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const todolists = useAppSelector(selectTodolists)
     const tasks = useAppSelector(selectTasks)
 
     const dispatch = useAppDispatch()
+
+    let demo = useOutletContext<boolean | undefined>()
 
     useEffect(() => {
         if (demo || !isLoggedIn) {
