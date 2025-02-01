@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { AppRootStateType } from './store';
 import { v1 } from 'uuid';
-import { tasksReducer } from 'features/TodolistList/model/tasks/tasks-reducer';
-import { todolistsReducer } from 'features/TodolistList/model/todolists/todolists-reducer';
+import { tasksReducer } from 'features/TodolistList/model/tasks/tasksSlice';
+import { todolistsReducer } from 'features/TodolistList/model/todolists/todolistsSlice';
 import { appReducer } from './app-reducer';
-import { authReducer } from 'features/auth/model/auth-reducer';
+import { authReducer } from 'features/auth/model/authSlice';
 import { HashRouter } from 'react-router-dom';
 import { TaskPriorities, TaskStatuses } from 'common/enums';
 

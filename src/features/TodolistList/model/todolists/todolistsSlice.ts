@@ -1,8 +1,9 @@
-import { ArgUpdateTodolistType, TodolistApi, TodolistApiType } from "features/TodolistList/api/todolist-api";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RequestStatusType, appActions } from "app/app-reducer";
-import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "common/utils";
 import { ResultCode } from "common/enums";
+import { TodolistApi } from "features/TodolistList/api/todolists-api";
+import { TodolistApiType, ArgUpdateTodolistType } from "features/TodolistList/api/todolists-api.type";
+import { createAppAsyncThunk, handleServerAppError, handleServerNetworkError } from "common/utils";
 
 export type FilterValuesType = "all" | "active" | "completed";
 

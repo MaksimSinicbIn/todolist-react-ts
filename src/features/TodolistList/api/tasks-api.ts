@@ -1,52 +1,6 @@
-import { TaskPriorities, TaskStatuses } from "common/enums";
-import { BaseResponseType } from "common/types";
 import { instance } from "common/instance";
-
-
-
-type GetTasksResponse = {
-    error: string | null
-    totalCount: number
-    items: TaskType[]
-}
-
-export type TaskType = {
-    description: string
-    title: string
-    status: number
-    priority: number
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
-
-export type UpdateTaskModelType = {
-    title: string
-    description: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-}
-
-export type ArgsAddType = {
-    todolistId: string,
-    title: string
-}
-
-export type ArgsUpdateTaskType = {
-    taskId: string,
-    domainModel: Partial<UpdateTaskModelType>,
-    todolistId: string
-}
-
-export type ArgsRemoveTaskType = {
-    todolistId: string,
-    taskId: string
-}
+import { BaseResponseType } from "common/types";
+import { GetTasksResponse, ArgsAddType, TaskType, UpdateTaskModelType } from "./tasks-api.type";
 
 export const TasksApi = {
     getTasks (todolistId: string) {

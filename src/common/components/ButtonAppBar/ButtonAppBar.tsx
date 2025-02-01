@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppSelector, useAppDispatch } from 'common/hooks';
-import { selectIsLoggedIn, authThunks } from 'features/auth/model/auth-reducer';
+import { selectIsLoggedIn, authThunks } from 'features/auth/model/authSlice';
 
 type ButtonAppBarProps = {
     

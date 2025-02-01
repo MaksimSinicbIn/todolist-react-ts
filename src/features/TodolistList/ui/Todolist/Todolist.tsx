@@ -3,15 +3,12 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import { Task } from './Task/Task';
-import { FilterValuesType, TodolistDomainType } from '../../model/todolists/todolists-reducer';
-import { tasksThunks } from 'features/TodolistList/model/tasks/tasks-reducer';
+import { FilterValuesType, TodolistDomainType } from '../../model/todolists/todolistsSlice';
+import { tasksThunks } from 'features/TodolistList/model/tasks/tasksSlice';
 import { useAppDispatch } from 'common/hooks';
 import { AddItemForm, EditableSpan } from 'common/components';
 import { TaskStatuses } from 'common/enums';
-import { TaskType } from '../../api/tasks-api';
-
-
-
+import { TaskType } from 'features/TodolistList/api/tasks-api.type';
 
 type PropsType = {
     todolist: TodolistDomainType

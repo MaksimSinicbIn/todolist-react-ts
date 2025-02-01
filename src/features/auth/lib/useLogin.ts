@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { authThunks, selectIsLoggedIn } from '../model/auth-reducer';
+import { authThunks, selectIsLoggedIn } from '../model/authSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { LoginType } from '../api/auth-api.types';
 

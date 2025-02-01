@@ -4,9 +4,9 @@ import Paper from '@mui/material/Paper';
 import { Navigate, useOutletContext } from 'react-router-dom';
 import { Todolist } from './Todolist/Todolist';
 import { AddItemForm } from 'common/components';
-import { selectTasks, tasksThunks } from '../model/tasks/tasks-reducer';
-import { selectIsLoggedIn } from '../../auth/model/auth-reducer';
-import { FilterValuesType, selectTodolists, todolistsActions, todolistsThunks } from '../model/todolists/todolists-reducer';
+import { selectTasks, tasksThunks } from '../model/tasks/tasksSlice';
+import { selectIsLoggedIn } from '../../auth/model/authSlice';
+import { FilterValuesType, selectTodolists, todolistsActions, todolistsThunks } from '../model/todolists/todolistsSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { TaskStatuses } from 'common/enums';
 

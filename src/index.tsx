@@ -19,7 +19,7 @@ const theme = createTheme({
             main: '#3f3d3d',
             },
             secondary: {
-                main: '#406665',
+                main: '#3f5353',
             },
             success: {
                 main: '#07993d',
@@ -28,11 +28,11 @@ const theme = createTheme({
 });
 
 root.render(
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>
-                <RouterProvider router={router}/>
-            </ThemeProvider>
-        </Provider>
+    <Provider store={store}>
+        <ThemeProvider theme={theme}>
+            <RouterProvider router={router} />
+        </ThemeProvider>
+    </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
