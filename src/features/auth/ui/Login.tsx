@@ -1,4 +1,3 @@
-import React from 'react'
 import Grid from '@mui/material/Grid'
 import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
@@ -7,51 +6,12 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { authThunks, selectIsLoggedIn } from '../model/auth-reducer'
-import { useAppDispatch, useAppSelector } from 'common/hooks'
 import { Navigate } from 'react-router-dom'
-import { useFormik } from 'formik'
-
-type ErrorType = {
-    email?: string
-    password?: string
-}
+import { useLogin } from '../lib/useLogin'
 
 export const Login = () => {
 
-    const isLoggedIn = useAppSelector(selectIsLoggedIn)
-
-    const dispatch = useAppDispatch()
-
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-            password: '',
-            rememberMe: false,
-        },
-        validate: (values) => {
-            const errors: ErrorType = {};
-            const isNotValid = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-
-            if (!values.email) {
-                errors.email = 'Required'
-            } else if (isNotValid) {
-                errors.email = 'Email is not valid!'
-            }
-
-            if (!values.password) {
-                errors.password = 'Required'
-            } else if (values.password.length < 5) {
-                errors.password = 'Must be more 4 symbols!'
-            }
-
-            return errors;
-        },
-        onSubmit: values => {
-            dispatch(authThunks.login(values))
-            formik.resetForm()
-        },
-    })
+    const { formik, isLoggedIn } = useLogin()
 
     if (isLoggedIn) {
         return <Navigate to='/todolists' />
