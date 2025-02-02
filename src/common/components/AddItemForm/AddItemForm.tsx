@@ -3,12 +3,12 @@ import { useState, KeyboardEvent, ChangeEvent, memo } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-type AddItemFormPropsType  = {
+type Props  = {
     onClick: (title: string) => void
     disabled?: boolean
 };
 
-export const AddItemForm = memo(({onClick, disabled = false}: AddItemFormPropsType) => {
+export const AddItemForm = memo(({onClick, disabled = false}: Props) => {
     const [title, setTitle] = useState("")
     const [error, setError] = useState<string | null>(null)
 

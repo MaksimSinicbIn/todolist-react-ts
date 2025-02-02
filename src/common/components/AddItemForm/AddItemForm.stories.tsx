@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import {AddItemForm} from './AddItemForm';
+import { AddItemForm } from './AddItemForm';
 
 const meta: Meta<typeof AddItemForm> = {
     title: 'TODOLISTS/AddItemForm',
@@ -12,9 +12,9 @@ const meta: Meta<typeof AddItemForm> = {
     argTypes: {
         onClick: { description: 'Button clicked inside form' },
     },
-    args: { 
+    args: {
         onClick: fn(),
-    },
+    }
 };
 
 export default meta;

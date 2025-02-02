@@ -1,21 +1,19 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { Navigate, useOutletContext } from 'react-router-dom';
 import { Todolist } from './Todolist/Todolist';
 import { AddItemForm } from 'common/components';
-import { selectTasks, tasksThunks } from '../model/tasks/tasksSlice';
+import { selectTasks } from '../model/tasks/tasksSlice';
 import { selectIsLoggedIn } from '../../auth/model/authSlice';
-import { FilterValuesType, selectTodolists, todolistsActions, todolistsThunks } from '../model/todolists/todolistsSlice';
+import { selectTodolists, todolistsThunks } from '../model/todolists/todolistsSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { TaskStatuses } from 'common/enums';
-
 
 type TodolistListPropsType = {
     //demo?: boolean
 }
 
-export const TodolistsList: React.FC<TodolistListPropsType> = ({...props }) => {
+export const TodolistsList = ({...props }: TodolistListPropsType) => {
 
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const todolists = useAppSelector(selectTodolists)
@@ -32,37 +30,9 @@ export const TodolistsList: React.FC<TodolistListPropsType> = ({...props }) => {
         dispatch(todolistsThunks.fetchTodolists())
     }, [])
 
-    const addTask = useCallback((todolistId: string, title: string) => {
-        dispatch(tasksThunks.addTask({ todolistId, title }))
-    }, [dispatch])
-
-    const removeTask = useCallback((todolistId: string, taskId: string) => {
-        dispatch(tasksThunks.removeTask({ todolistId, taskId }))
-    }, [dispatch])
-
-    const changeTaskStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
-        dispatch(tasksThunks.updateTask({ todolistId, taskId, domainModel: { status } }))
-    }, [dispatch])
-
-    const changeTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
-        dispatch(tasksThunks.updateTask({ todolistId, taskId, domainModel: { title } }))
-    }, [dispatch])
-
-    const addTodolist = useCallback((title: string) => {
+    const addTodolistCb = (title: string) => {
         dispatch(todolistsThunks.addTodolist({ title }))
-    }, [dispatch])
-
-    const removeTodolist = useCallback((todolistId: string) => {
-        dispatch(todolistsThunks.removeTodolist(todolistId))
-    }, [dispatch])
-
-    const changeTodolistFilter = useCallback((todolistId: string, filter: FilterValuesType) => {
-        dispatch(todolistsActions.changeTodolistFilter({ id: todolistId, newFilter: filter }))
-    }, [dispatch])
-
-    const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
-        dispatch(todolistsThunks.changeTodolistTitle({ todolistId, title }))
-    }, [dispatch])
+    }
 
     if (!isLoggedIn) {
         return <Navigate to='/login' />
@@ -71,7 +41,7 @@ export const TodolistsList: React.FC<TodolistListPropsType> = ({...props }) => {
     return (
         <div>
             <Grid container style={{ padding: '15px' }}>
-                <AddItemForm onClick={addTodolist} />
+                <AddItemForm onClick={addTodolistCb} />
             </Grid>
             <Grid container spacing={4}>
                 {
@@ -82,13 +52,6 @@ export const TodolistsList: React.FC<TodolistListPropsType> = ({...props }) => {
                                     key={tl.id}
                                     todolist={tl}
                                     tasks={tasks[tl.id]}
-                                    addTask={addTask}
-                                    removeTask={removeTask}
-                                    changeTaskStatus={changeTaskStatus}
-                                    changeTaskTitle={changeTaskTitle}
-                                    removeTodolist={removeTodolist}
-                                    changeTodolistFilter={changeTodolistFilter}
-                                    changeTodolistTitle={changeTodolistTitle}
                                     demo={demo}
                                 />
                             </Paper>
