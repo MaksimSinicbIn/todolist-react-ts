@@ -11,11 +11,11 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
-        errorElement: <Navigate to='/404'/>,
+        errorElement: <Navigate to='/404' />,
         children: [
             {
                 index: true,
-                element: <Navigate to={'/todolists'}/>
+                element: <Navigate to={'/todolists'} />
             },
             {
                 path: "/login",

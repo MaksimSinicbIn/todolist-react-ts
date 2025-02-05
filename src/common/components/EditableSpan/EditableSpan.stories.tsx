@@ -1,4 +1,4 @@
-import type {Meta, StoryObj} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { EditableSpan } from './EditableSpan';
 
@@ -12,11 +12,11 @@ const meta: Meta<typeof EditableSpan> = {
     argTypes: {
         onChange: { description: 'Button clicked inside form' },
     },
-    args: { 
+    args: {
         onChange: fn(),
         oldTitle: 'Test Text'
     },
-    
+
 };
 
 export default meta;

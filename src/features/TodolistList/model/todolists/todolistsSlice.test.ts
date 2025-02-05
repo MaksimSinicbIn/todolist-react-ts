@@ -1,5 +1,5 @@
 import { v1 } from 'uuid'
-import { RequestStatusType } from 'app/app-reducer'
+import { RequestStatusType } from 'app/appSlice'
 import { ActionForTest } from 'common/types'
 import { TodolistApiType } from 'features/TodolistList/api/todolists-api.type'
 import { FilterValuesType, TodolistDomainType, todolistsActions, todolistsReducer, todolistsThunks } from './todolistsSlice'

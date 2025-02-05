@@ -3,7 +3,7 @@ import './App.css';
 import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
-import { selectIsInitialized, selectStatus } from 'app/app-reducer';
+import { selectIsInitialized, selectStatus } from 'app/appSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { authThunks } from 'features/auth/model/authSlice';
 import { ButtonAppBar, ErrorSnackbar } from 'common/components';

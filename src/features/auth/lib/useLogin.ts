@@ -3,7 +3,7 @@ import { authThunks, selectIsLoggedIn } from '../model/authSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { LoginType } from '../api/auth-api.types';
 
-type FormikErrorType = Omit<Partial<LoginType>, 'captcha' >
+type FormikErrorType = Omit<Partial<LoginType>, 'captcha'>
 
 export const useLogin = () => {
 

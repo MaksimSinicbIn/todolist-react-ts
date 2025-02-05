@@ -7,10 +7,10 @@ import { AppRootStateType } from 'app/store';
 import { v1 } from 'uuid';
 import { tasksReducer } from 'features/TodolistList/model/tasks/tasksSlice';
 import { todolistsReducer } from 'features/TodolistList/model/todolists/todolistsSlice';
-import { appReducer } from 'app/app-reducer';
 import { authReducer } from 'features/auth/model/authSlice';
 import { HashRouter } from 'react-router-dom';
 import { TaskPriorities, TaskStatuses } from 'common/enums';
+import { appReducer } from 'app/appSlice';
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
@@ -96,7 +96,7 @@ export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
     return <Provider store={storyBookStore}>{storyFn()}</Provider>
 };
 
-export const HashRouterStoreDecorator = (storyFn: any) => {
+export const HashRouterStoreDecorator = (storyFn: () => React.ReactNode) => {
     return <HashRouter>
         {storyFn()}
     </HashRouter>

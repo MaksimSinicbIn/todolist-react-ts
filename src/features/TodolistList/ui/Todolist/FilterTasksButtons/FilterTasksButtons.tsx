@@ -13,7 +13,7 @@ export const FilterTasksButtons = ({ todolist }: Props) => {
     const dispatch = useAppDispatch()
 
     const filterTasksHandler = (filter: FilterValuesType) => {
-        dispatch(todolistsActions.changeTodolistFilter({ id, newFilter: filter}))
+        dispatch(todolistsActions.changeTodolistFilter({ id, newFilter: filter }))
     }
 
     return (

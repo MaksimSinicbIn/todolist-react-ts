@@ -13,7 +13,7 @@ type TodolistListPropsType = {
     //demo?: boolean
 }
 
-export const TodolistsList = ({...props }: TodolistListPropsType) => {
+export const TodolistsList = ({ ...props }: TodolistListPropsType) => {
 
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const todolists = useAppSelector(selectTodolists)
@@ -31,7 +31,7 @@ export const TodolistsList = ({...props }: TodolistListPropsType) => {
     }, [])
 
     const addTodolistCb = (title: string) => {
-        dispatch(todolistsThunks.addTodolist({ title }))
+        return dispatch(todolistsThunks.addTodolist({ title }))
     }
 
     if (!isLoggedIn) {
@@ -41,7 +41,7 @@ export const TodolistsList = ({...props }: TodolistListPropsType) => {
     return (
         <div>
             <Grid container style={{ padding: '15px' }}>
-                <AddItemForm onClick={addTodolistCb} />
+                <AddItemForm addItem={addTodolistCb} />
             </Grid>
             <Grid container spacing={4}>
                 {

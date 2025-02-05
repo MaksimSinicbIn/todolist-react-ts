@@ -9,11 +9,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useAppSelector, useAppDispatch } from 'common/hooks';
 import { selectIsLoggedIn, authThunks } from 'features/auth/model/authSlice';
 
-type ButtonAppBarProps = {
-    
+type Props = {
+
 };
 
-export const ButtonAppBar = (props: ButtonAppBarProps) => {
+export const ButtonAppBar = (props: Props) => {
 
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
 

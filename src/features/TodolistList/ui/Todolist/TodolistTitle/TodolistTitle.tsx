@@ -8,7 +8,7 @@ type Props = {
     todolist: TodolistDomainType
 };
 
-export const TodolistTitle = ( { todolist }: Props) => {
+export const TodolistTitle = ({ todolist }: Props) => {
 
     const { id, title, entityStatus } = todolist
 

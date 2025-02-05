@@ -26,19 +26,19 @@ export const Todolist = ({ demo = false, ...props }: Props) => {
     }, [])
 
     const addTaskCb = (title: string) => {
-        dispatch(tasksThunks.addTask({todolistId: props.todolist.id, title }))
+        return dispatch(tasksThunks.addTask({ todolistId: props.todolist.id, title }))
     }
 
     return (
         <div>
-            <TodolistTitle todolist={props.todolist}/>
+            <TodolistTitle todolist={props.todolist} />
             <div>
-                <AddItemForm onClick={addTaskCb} disabled={props.todolist.entityStatus === 'loading'} />
+                <AddItemForm addItem={addTaskCb} disabled={props.todolist.entityStatus === 'loading'} />
             </div>
             {props.tasks.length === 0 ? (
                 <p>Тасок нет!</p>
             ) : (
-                <Tasks todolist={props.todolist}/>
+                <Tasks todolist={props.todolist} />
             )}
             <div style={{ display: 'flex', gap: '5px' }}>
                 <FilterTasksButtons todolist={props.todolist} />

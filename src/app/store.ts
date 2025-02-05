@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { appReducer } from "./app-reducer";
+import { appReducer } from "./appSlice";
 import { authReducer } from "../features/auth/model/authSlice";
 import { todolistsReducer } from "features/TodolistList/model/todolists/todolistsSlice";
 import { tasksReducer } from "features/TodolistList/model/tasks/tasksSlice";

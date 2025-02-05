@@ -18,9 +18,9 @@ export const Task = ({ task }: Props) => {
     const { id: taskId, todoListId: todolistId, title } = task
 
     const dispatch = useAppDispatch()
-    
+
     const removeTaskHandler = () => {
-        dispatch(tasksThunks.removeTask({ todolistId, taskId}))
+        dispatch(tasksThunks.removeTask({ todolistId, taskId }))
     }
 
     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,9 +33,9 @@ export const Task = ({ task }: Props) => {
     }
 
     const isTaskCompleted = task.status === TaskStatuses.Completed
-    
+
     return (
-        <li key={taskId} style={{listStyleType: 'none'}}>
+        <li key={taskId} style={{ listStyleType: 'none' }}>
             <Checkbox
                 checked={isTaskCompleted}
                 color="primary"

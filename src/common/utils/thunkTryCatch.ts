@@ -6,17 +6,17 @@ import { handleServerNetworkError } from "./handleServerNetworkError";
 
 // Обертка try/catch
 export const thunkTryCatch = async <T>(
-  thunkAPI: BaseThunkAPI<AppRootStateType, unknown, AppDispatch, null | BaseResponseType>,
-  logic: () => Promise<T>,
+    thunkAPI: BaseThunkAPI<AppRootStateType, unknown, AppDispatch, null | BaseResponseType>,
+    logic: () => Promise<T>,
 ): Promise<T | ReturnType<typeof thunkAPI.rejectWithValue>> => {
-  const { dispatch, rejectWithValue } = thunkAPI;
-  dispatch(appActions.setAppStatus({ status: "loading" }));
-  try {
-    return await logic();
-  } catch (e) {
-    handleServerNetworkError(dispatch, e);
-    return rejectWithValue(null);
-  } finally {
-    dispatch(appActions.setAppStatus({ status: "idle" }));
-  }
+    const { dispatch, rejectWithValue } = thunkAPI;
+    dispatch(appActions.setAppStatus({ status: "loading" }));
+    try {
+        return await logic();
+    } catch (e) {
+        handleServerNetworkError(dispatch, e);
+        return rejectWithValue(null);
+    } finally {
+        dispatch(appActions.setAppStatus({ status: "idle" }));
+    }
 };

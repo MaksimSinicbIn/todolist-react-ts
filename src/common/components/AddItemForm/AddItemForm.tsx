@@ -2,32 +2,41 @@ import * as React from 'react';
 import { useState, KeyboardEvent, ChangeEvent, memo } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { BaseResponseType } from 'common/types';
 
-type Props  = {
-    onClick: (title: string) => void
+type Props = {
+    addItem: (title: string) => Promise<any>
     disabled?: boolean
 };
 
-export const AddItemForm = memo(({onClick, disabled = false}: Props) => {
+export const AddItemForm = memo(({ addItem, disabled = false }: Props) => {
     const [title, setTitle] = useState("")
     const [error, setError] = useState<string | null>(null)
 
-    
     const addTask = () => {
         let newTitle = title.trim();
         if (newTitle !== "") {
-            onClick(newTitle);
-            setTitle("");
+            addItem(newTitle)
+                .then(unwrapResult)
+                .then(() => {
+                    setTitle("");
+                })
+                .catch((err: BaseResponseType) => {
+                    if (err?.resultCode) {
+                        setError(err.messages[0]);
+                    }
+                })
         } else {
-            setError("Title is required");
+            setError('Title is required')
         }
     }
 
-    function onChangeSetTitle (e: ChangeEvent<HTMLInputElement>) {
+    const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
-    function onKeyDownAddTaskHandler (e: KeyboardEvent<HTMLInputElement>) {
+    const onKeyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error !== null) {
             setError(null);
         }
@@ -46,15 +55,15 @@ export const AddItemForm = memo(({onClick, disabled = false}: Props) => {
     return (
         <div>
             <TextField
-                error={!!error}
-                id="outlined-basic"
-                label={error ? error : "Type something"}
                 variant="outlined"
-                size='small'
+                error={!!error}
+                disabled={disabled}
                 value={title}
+                size='small'
                 onChange={onChangeSetTitle}
                 onKeyDown={onKeyDownAddTaskHandler}
-                disabled={disabled}
+                label={"Title"}
+                helperText={error}
             />
             <Button sx={buttonStyles} variant="contained" onClick={addTask} disabled={disabled}>+</Button>
         </div>

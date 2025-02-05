@@ -10,10 +10,10 @@ const meta: Meta<typeof AddItemForm> = {
     },
     tags: ['autodocs'],
     argTypes: {
-        onClick: { description: 'Button clicked inside form' },
+        addItem: { description: 'Button clicked inside form' },
     },
     args: {
-        onClick: fn(),
+        addItem: fn(),
     }
 };
 

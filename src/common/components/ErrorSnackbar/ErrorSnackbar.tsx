@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { selectError, appActions } from 'app/app-reducer';
+import { selectError, appActions } from 'app/appSlice';
 import { useAppSelector, useAppDispatch } from 'common/hooks';
 
-export function ErrorSnackbar() {
+export const ErrorSnackbar = () => {
 
     const error = useAppSelector(selectError)
 
@@ -14,7 +14,7 @@ export function ErrorSnackbar() {
         if (reason === 'clickaway') {
             return;
         }
-        dispatch(appActions.setAppError({error: null}))
+        dispatch(appActions.setAppError({ error: null }))
     };
 
     return (

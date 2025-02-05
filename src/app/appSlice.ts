@@ -1,4 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { AnyAction, PayloadAction, createSlice, isFulfilled, isPending, isRejected } from "@reduxjs/toolkit"
+import { tasksThunks } from "features/TodolistList/model/tasks/tasksSlice"
+import { todolistsThunks } from "features/TodolistList/model/todolists/todolistsSlice"
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -23,6 +25,26 @@ const slice = createSlice({
         setInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
             state.isInitialized = action.payload.isInitialized
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addMatcher(isPending, (state, action) => {
+                state.status = 'loading'
+            })
+            .addMatcher(isFulfilled, (state, action) => {
+                state.status = 'succeeded'
+            })
+            .addMatcher(isRejected, (state, action: AnyAction) => {
+                state.status = 'failed'
+                if (action.payload) {
+                    if (action.type === todolistsThunks.addTodolist.rejected.type || tasksThunks.addTask.rejected.type) return
+                    state.error = action.payload.messages[0]
+                    console.log(action.payload.messages[0]);
+                    
+                } else {
+                    state.error = action.error.message ? action.error.message : 'Some error occurred'
+                }
+            })
     },
     selectors: {
         selectError: (state) => state.error,
