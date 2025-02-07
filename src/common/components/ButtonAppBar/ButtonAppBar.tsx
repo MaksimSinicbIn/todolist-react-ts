@@ -4,10 +4,14 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Switch from "@mui/material/Switch";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppSelector, useAppDispatch } from 'common/hooks';
 import { selectIsLoggedIn, authThunks } from 'features/auth/model/authSlice';
+import { appActions, selectThemeMode } from 'app/appSlice';
+import { MenuButton } from '../MenuButton/MenuButton';
+import { getTheme } from 'common/theme';
 
 type Props = {
 
@@ -15,9 +19,16 @@ type Props = {
 
 export const ButtonAppBar = (props: Props) => {
 
+    const dispatch = useAppDispatch()
+
+    const themeMode = useAppSelector(selectThemeMode)
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
-    const dispatch = useAppDispatch()
+    const theme = getTheme(themeMode)
+
+    const changeModeHandler = () => {
+        dispatch(appActions.changeTheme({ themeMode: themeMode === "light" ? "dark" : "light" }))
+    }
 
     const logOutHandler = () => {
         dispatch(authThunks.logOut())
@@ -37,7 +48,8 @@ export const ButtonAppBar = (props: Props) => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
-                    {isLoggedIn && <Button color="inherit" onClick={logOutHandler}>Log out</Button>}
+                    {isLoggedIn && <MenuButton background={theme.palette.primary.dark} onClick={logOutHandler}>Log out</MenuButton>}
+                    <Switch color={"default"} onChange={changeModeHandler} />
                 </Toolbar>
             </AppBar>
         </Box>

@@ -3,18 +3,22 @@ import './App.css';
 import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
-import { selectIsInitialized, selectStatus } from 'app/appSlice';
+import { selectIsInitialized, selectStatus, selectThemeMode } from 'app/appSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { authThunks } from 'features/auth/model/authSlice';
 import { ButtonAppBar, ErrorSnackbar } from 'common/components';
 import { Outlet } from 'react-router-dom';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import CssBaseline from "@mui/material/CssBaseline"
+import { getTheme } from 'common/theme';
 
 type AppPropsType = {
     demo?: boolean
 }
 
 function App({ demo = false }: AppPropsType) {
-
+    
+    const theme = useAppSelector(selectThemeMode)
     const status = useAppSelector(selectStatus)
     const isInitialized = useAppSelector(selectIsInitialized)
 
@@ -36,12 +40,15 @@ function App({ demo = false }: AppPropsType) {
 
     return (
         <div className="App">
+            <ThemeProvider theme={getTheme(theme)}>
+            <CssBaseline/>
             <ErrorSnackbar />
             <ButtonAppBar />
             {status === 'loading' && <LinearProgress color="secondary" />}
             <Container fixed>
                 <Outlet context={demo}/>
             </Container>
+            </ThemeProvider>
         </div>
     );
 }

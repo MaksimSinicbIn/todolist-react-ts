@@ -2,10 +2,12 @@ import { AnyAction, PayloadAction, createSlice, isFulfilled, isPending, isReject
 import { tasksThunks } from "features/TodolistList/model/tasks/tasksSlice"
 import { todolistsThunks } from "features/TodolistList/model/todolists/todolistsSlice"
 
+export type ThemeMode = "dark" | "light"
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
     isInitialized: false,
+    themeMode: "light" as ThemeMode,
     error: null as null | string,
     status: 'loading' as RequestStatusType,
 }
@@ -16,6 +18,9 @@ const slice = createSlice({
     name: 'app',
     initialState,
     reducers: {
+        changeTheme: (state, action: PayloadAction<{ themeMode: ThemeMode }>) => {
+            state.themeMode = action.payload.themeMode
+        },
         setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
             state.status = action.payload.status
         },
@@ -49,10 +54,11 @@ const slice = createSlice({
     selectors: {
         selectError: (state) => state.error,
         selectStatus: (state) => state.status,
+        selectThemeMode: (state) => state.themeMode,
         selectIsInitialized: (state) => state.isInitialized,
     }
 })
 
 export const appReducer = slice.reducer
 export const appActions = slice.actions
-export const { selectError, selectStatus, selectIsInitialized } = slice.selectors
+export const { selectError, selectStatus, selectThemeMode, selectIsInitialized } = slice.selectors

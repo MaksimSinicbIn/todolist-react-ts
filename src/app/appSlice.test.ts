@@ -5,6 +5,7 @@ let startState: InitialStateType
 beforeEach(() => {
     startState = {
         isInitialized: false,
+        themeMode: 'light',
         error: null,
         status: 'loading'
     }

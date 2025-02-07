@@ -81,6 +81,7 @@ const initialGlobalState: AppRootStateType = {
     },
     app: {
         isInitialized: true,
+        themeMode: 'light',
         error: null,
         status: 'succeeded'
     }
