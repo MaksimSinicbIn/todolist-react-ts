@@ -6,26 +6,10 @@ import { Provider } from 'react-redux';
 import { store } from 'app/store';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes/router';
-import createTheme from '@mui/material/styles/createTheme';
-
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
-
-// export const theme = createTheme({
-//     palette: {
-//         primary: {
-//             main: '#3f3d3d',
-//         },
-//         secondary: {
-//             main: '#3f5353',
-//         },
-//         success: {
-//             main: '#07993d',
-//         },
-//     },
-// });
 
 root.render(
     <Provider store={store}>

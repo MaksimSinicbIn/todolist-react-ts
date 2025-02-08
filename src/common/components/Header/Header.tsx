@@ -3,21 +3,21 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import Switch from "@mui/material/Switch";
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useAppSelector, useAppDispatch } from 'common/hooks';
 import { selectIsLoggedIn, authThunks } from 'features/auth/model/authSlice';
 import { appActions, selectThemeMode } from 'app/appSlice';
-import { MenuButton } from '../MenuButton/MenuButton';
+import { MenuButton } from 'common/components/MenuButton/MenuButton'
 import { getTheme } from 'common/theme';
+
 
 type Props = {
 
 };
 
-export const ButtonAppBar = (props: Props) => {
+export const Header = (props: Props) => {
 
     const dispatch = useAppDispatch()
 

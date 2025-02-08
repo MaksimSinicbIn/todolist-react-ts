@@ -45,7 +45,7 @@ const slice = createSlice({
                     if (action.type === todolistsThunks.addTodolist.rejected.type || tasksThunks.addTask.rejected.type) return
                     state.error = action.payload.messages[0]
                     console.log(action.payload.messages[0]);
-                    
+
                 } else {
                     state.error = action.error.message ? action.error.message : 'Some error occurred'
                 }
