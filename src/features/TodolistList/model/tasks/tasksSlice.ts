@@ -11,7 +11,7 @@ export type TasksStateType = {
 
 const initialState: TasksStateType = {}
 
-const slice = createSlice({
+export const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {},
@@ -56,7 +56,7 @@ const slice = createSlice({
 })
 
 // Thunk
-const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }, string>(`${slice.name}/fetchTasks`,
+const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }, string>(`${tasksSlice.name}/fetchTasks`,
     async (todolistId: string, thunkApi) => {
         const res = await TasksApi.getTasks(todolistId)
         const tasks = res.data.items
@@ -64,7 +64,7 @@ const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }
     }
 )
 
-const addTask = createAppAsyncThunk<{ task: TaskType }, ArgsAddType>(`${slice.name}/addTask`,
+const addTask = createAppAsyncThunk<{ task: TaskType }, ArgsAddType>(`${tasksSlice.name}/addTask`,
     async (arg, { rejectWithValue }) => {
         const res = await TasksApi.createTasks(arg)
         if (res.data.resultCode === ResultCode.success) {
@@ -76,7 +76,7 @@ const addTask = createAppAsyncThunk<{ task: TaskType }, ArgsAddType>(`${slice.na
     }
 )
 
-const removeTask = createAppAsyncThunk<ArgsRemoveTaskType, ArgsRemoveTaskType>(`${slice.name}/removeTask`,
+const removeTask = createAppAsyncThunk<ArgsRemoveTaskType, ArgsRemoveTaskType>(`${tasksSlice.name}/removeTask`,
     async (arg, { rejectWithValue }) => {
         const res = await TasksApi.deleteTasks(arg.todolistId, arg.taskId)
         if (res.data.resultCode === ResultCode.success) {
@@ -87,7 +87,7 @@ const removeTask = createAppAsyncThunk<ArgsRemoveTaskType, ArgsRemoveTaskType>(`
     }
 )
 
-const updateTask = createAppAsyncThunk<ArgsUpdateTaskType, ArgsUpdateTaskType>(`${slice.name}/updateTask`, async (arg, thunkApi) => {
+const updateTask = createAppAsyncThunk<ArgsUpdateTaskType, ArgsUpdateTaskType>(`${tasksSlice.name}/updateTask`, async (arg, thunkApi) => {
     const { rejectWithValue, getState } = thunkApi
     const state = getState()
     const task = state.tasks[arg.todolistId].find(t => t.id === arg.taskId)
@@ -112,7 +112,7 @@ const updateTask = createAppAsyncThunk<ArgsUpdateTaskType, ArgsUpdateTaskType>(`
     }
 })
 
-export const tasksReducer = slice.reducer
-export const tasksActions = slice.actions
-export const { selectTasks } = slice.selectors
+export const tasksReducer = tasksSlice.reducer
+export const tasksActions = tasksSlice.actions
+export const { selectTasks } = tasksSlice.selectors
 export const tasksThunks = { fetchTasks, addTask, removeTask, updateTask }

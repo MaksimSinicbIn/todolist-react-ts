@@ -5,18 +5,18 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { AppRootStateType } from 'app/store';
 import { v1 } from 'uuid';
-import { tasksReducer } from 'features/TodolistList/model/tasks/tasksSlice';
-import { todolistsReducer } from 'features/TodolistList/model/todolists/todolistsSlice';
-import { authReducer } from 'features/auth/model/authSlice';
+import { tasksReducer, tasksSlice } from 'features/TodolistList/model/tasks/tasksSlice';
+import { todolistsReducer, todolistsSlice } from 'features/TodolistList/model/todolists/todolistsSlice';
+import { authReducer, authSlice } from 'features/auth/model/authSlice';
 import { HashRouter } from 'react-router-dom';
 import { TaskPriorities, TaskStatuses } from 'common/enums';
-import { appReducer } from 'app/appSlice';
+import { appReducer, appSlice } from 'app/appSlice';
 
 const rootReducer = combineReducers({
-    tasks: tasksReducer,
-    todolists: todolistsReducer,
-    auth: authReducer,
-    app: appReducer
+    [todolistsSlice.name]: todolistsReducer,
+    [tasksSlice.name]: tasksReducer,
+    [authSlice.name]: authReducer,
+    [appSlice.name]: appReducer
 })
 
 const initialGlobalState: AppRootStateType = {
@@ -81,7 +81,7 @@ const initialGlobalState: AppRootStateType = {
     },
     app: {
         isInitialized: true,
-        themeMode: 'light',
+        themeMode: 'dark',
         error: null,
         status: 'succeeded'
     }

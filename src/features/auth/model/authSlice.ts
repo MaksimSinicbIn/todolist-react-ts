@@ -11,7 +11,7 @@ const initialState = {
     isLoggedIn: false,
 }
 
-const slice = createSlice({
+export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {},
@@ -29,7 +29,7 @@ const slice = createSlice({
 })
 
 // Thunk
-const me = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(`${slice.name}/me`, async (_, thunkApi) => {
+const me = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(`${authSlice.name}/me`, async (_, thunkApi) => {
     const { dispatch, rejectWithValue } = thunkApi
     const res = await AuthApi.me().finally(() => {
         dispatch(appActions.setInitialized({ isInitialized: true }))
@@ -42,7 +42,7 @@ const me = createAppAsyncThunk<{ isLoggedIn: boolean }, void>(`${slice.name}/me`
 }
 )
 
-const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginType>(`${slice.name}/login`, async (arg, thunkApi) => {
+const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginType>(`${authSlice.name}/login`, async (arg, thunkApi) => {
     const { rejectWithValue } = thunkApi
     const res = await AuthApi.login(arg)
     if (res.data.resultCode === ResultCode.success) {
@@ -52,7 +52,7 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginType>(`${slice.n
     }
 })
 
-const logOut = createAppAsyncThunk<{ isLoggedIn: false }, void>(`${slice.name}/logOut`, async (_, thunkApi) => {
+const logOut = createAppAsyncThunk<{ isLoggedIn: false }, void>(`${authSlice.name}/logOut`, async (_, thunkApi) => {
     const { dispatch, rejectWithValue } = thunkApi
     const res = await AuthApi.logOut()
     if (res.data.resultCode === ResultCode.success) {
@@ -63,7 +63,7 @@ const logOut = createAppAsyncThunk<{ isLoggedIn: false }, void>(`${slice.name}/l
     }
 })
 
-export const authReducer = slice.reducer
-export const authActions = slice.actions
-export const { selectIsLoggedIn } = slice.selectors
+export const authReducer = authSlice.reducer
+export const authActions = authSlice.actions
+export const { selectIsLoggedIn } = authSlice.selectors
 export const authThunks = { me, login, logOut }

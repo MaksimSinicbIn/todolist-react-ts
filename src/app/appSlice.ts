@@ -7,14 +7,14 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
     isInitialized: false,
-    themeMode: "light" as ThemeMode,
+    themeMode: "dark" as ThemeMode,
     error: null as null | string,
     status: 'loading' as RequestStatusType,
 }
 
 export type InitialStateType = typeof initialState
 
-const slice = createSlice({
+export const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
@@ -59,6 +59,6 @@ const slice = createSlice({
     }
 })
 
-export const appReducer = slice.reducer
-export const appActions = slice.actions
-export const { selectError, selectStatus, selectThemeMode, selectIsInitialized } = slice.selectors
+export const appReducer = appSlice.reducer
+export const appActions = appSlice.actions
+export const { selectError, selectStatus, selectThemeMode, selectIsInitialized } = appSlice.selectors

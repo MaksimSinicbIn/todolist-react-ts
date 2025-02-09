@@ -14,7 +14,7 @@ export type TodolistDomainType = TodolistApiType & {
 
 const initialState: TodolistDomainType[] = []
 
-const slice = createSlice({
+export const todolistsSlice = createSlice({
     name: 'todolists',
     initialState,
     reducers: {
@@ -66,7 +66,7 @@ const slice = createSlice({
 })
 
 // Thunk
-const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistApiType[] }, void>(`${slice.name}/fetchTodolists`,
+const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistApiType[] }, void>(`${todolistsSlice.name}/fetchTodolists`,
     async () => {
         const res = await TodolistApi.getTodolists()
         const todolists = res.data
@@ -74,7 +74,7 @@ const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistApiType[] }, voi
     }
 )
 
-const addTodolist = createAppAsyncThunk<{ todolist: TodolistApiType }, { title: string }>(`${slice.name}/addTodolist`,
+const addTodolist = createAppAsyncThunk<{ todolist: TodolistApiType }, { title: string }>(`${todolistsSlice.name}/addTodolist`,
     async (arg, { rejectWithValue }) => {
         const res = await TodolistApi.createTodolists(arg.title)
         if (res.data.resultCode === ResultCode.success) {
@@ -85,7 +85,7 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistApiType }, { title: 
     }
 )
 
-const removeTodolist = createAppAsyncThunk<{ id: string }, string>(`${slice.name}/removeTodolist`, async (id, thunkApi) => {
+const removeTodolist = createAppAsyncThunk<{ id: string }, string>(`${todolistsSlice.name}/removeTodolist`, async (id, thunkApi) => {
     const { dispatch, rejectWithValue } = thunkApi
     const res = await TodolistApi.deleteTodolists(id)
     if (res.data.resultCode === ResultCode.success) {
@@ -96,7 +96,7 @@ const removeTodolist = createAppAsyncThunk<{ id: string }, string>(`${slice.name
     }
 })
 
-const changeTodolistTitle = createAppAsyncThunk<ArgUpdateTodolistType, ArgUpdateTodolistType>(`${slice.name}/updateTodolist`,
+const changeTodolistTitle = createAppAsyncThunk<ArgUpdateTodolistType, ArgUpdateTodolistType>(`${todolistsSlice.name}/updateTodolist`,
     async (arg, { rejectWithValue }) => {
         const res = await TodolistApi.updateTodolists(arg)
         if (res.data.resultCode === ResultCode.success) {
@@ -107,7 +107,7 @@ const changeTodolistTitle = createAppAsyncThunk<ArgUpdateTodolistType, ArgUpdate
     }
 )
 
-export const todolistsReducer = slice.reducer
-export const todolistsActions = slice.actions
-export const { selectTodolists } = slice.selectors
+export const todolistsReducer = todolistsSlice.reducer
+export const todolistsActions = todolistsSlice.actions
+export const { selectTodolists } = todolistsSlice.selectors
 export const todolistsThunks = { fetchTodolists, addTodolist, removeTodolist, changeTodolistTitle }
