@@ -25,3 +25,10 @@ yarn-error.log*
 *storybook.log
 
 /__image_snapshots__
+
+# env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
