@@ -8,9 +8,9 @@ import { v1 } from 'uuid';
 import { tasksReducer, tasksSlice } from 'features/TodolistList/model/tasks/tasksSlice';
 import { todolistsReducer, todolistsSlice } from 'features/TodolistList/model/todolists/todolistsSlice';
 import { authReducer, authSlice } from 'features/auth/model/authSlice';
-import { HashRouter } from 'react-router-dom';
 import { TaskPriorities, TaskStatuses } from 'common/enums';
 import { appReducer, appSlice } from 'app/appSlice';
+import { HashRouter } from 'react-router';
 
 const rootReducer = combineReducers({
     [todolistsSlice.name]: todolistsReducer,

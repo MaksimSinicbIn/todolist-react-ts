@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
 import App from './App';
-import { ReduxStoreProviderDecorator } from 'stories/decorators/ReduxStoreProviderDecorator';
+import { HashRouterStoreDecorator, ReduxStoreProviderDecorator } from 'stories/decorators/ReduxStoreProviderDecorator';
 
 const meta: Meta<typeof App> = {
     title: 'APP/App',
@@ -12,7 +12,7 @@ const meta: Meta<typeof App> = {
     args: {
         demo: true
     },
-    decorators: [ReduxStoreProviderDecorator]
+    decorators: [ReduxStoreProviderDecorator, HashRouterStoreDecorator]
 }
 
 export default meta;
