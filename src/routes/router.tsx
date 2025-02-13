@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { Navigate, createHashRouter } from "react-router-dom";
 import App from "app/App";
 import { ErrorPage } from "common/components";
 import { Login } from "features/auth/ui/Login";
@@ -7,7 +7,7 @@ import { TodolistsList } from "features/TodolistList/ui/TodolistsList";
 
 // let demo = true
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
     {
         path: "/",
         element: <App />,
