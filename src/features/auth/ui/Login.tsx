@@ -6,7 +6,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router'
 import { useLogin } from '../lib/useLogin'
 
 export const Login = () => {

@@ -4,12 +4,20 @@ import CssBaseline from "@mui/material/CssBaseline"
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import LinearProgress from '@mui/material/LinearProgress/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
+import { Routes, Route, Navigate } from 'react-router';
 import { selectIsInitialized, selectStatus, selectThemeMode } from 'app/appSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { authThunks } from 'features/auth/model/authSlice';
-import { Header, ErrorSnackbar } from 'common/components';
-import { Outlet } from 'react-router-dom';
+import { Login } from 'features/auth/ui/Login';
+import { Header, ErrorSnackbar, ErrorPage } from 'common/components';
+import { TodolistsList } from 'features/TodolistList/ui/TodolistsList';
 import { getTheme } from 'common/theme';
+
+export const Path = {
+    Login: 'login',
+    TodolistsPage: 'todolists',
+    ErrorPage: '404'
+} as const
 
 type AppPropsType = {
     demo?: boolean
@@ -44,7 +52,13 @@ function App({ demo = false }: AppPropsType) {
             <Header />
             {status === 'loading' && <LinearProgress color="secondary" />}
             <Container fixed>
-                <Outlet context={demo} />
+                <Routes>
+                    <Route path={Path.TodolistsPage} element={<TodolistsList demo={demo}/>} />
+                    <Route path='/' element={<Navigate to={Path.TodolistsPage} />} />
+                    <Route path={Path.Login} element={<Login />} />
+                    <Route path={Path.ErrorPage} element={<ErrorPage />} />
+                    <Route path='*' element={<Navigate to="404" />} />
+                </Routes>
             </Container>
         </ThemeProvider>
     );

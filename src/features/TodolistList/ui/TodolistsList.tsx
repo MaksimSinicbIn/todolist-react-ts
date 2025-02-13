@@ -1,27 +1,25 @@
 import React, { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { Navigate, useOutletContext } from 'react-router-dom';
 import { Todolist } from './Todolist/Todolist';
 import { AddItemForm } from 'common/components';
 import { selectTasks } from '../model/tasks/tasksSlice';
 import { selectIsLoggedIn } from '../../auth/model/authSlice';
 import { selectTodolists, todolistsThunks } from '../model/todolists/todolistsSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
+import { Navigate } from 'react-router';
 
 type TodolistListPropsType = {
-    //demo?: boolean
+    demo?: boolean
 }
 
-export const TodolistsList = ({ ...props }: TodolistListPropsType) => {
+export const TodolistsList = ({ demo = false, ...props }: TodolistListPropsType) => {
 
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const todolists = useAppSelector(selectTodolists)
     const tasks = useAppSelector(selectTasks)
 
     const dispatch = useAppDispatch()
-
-    let demo = useOutletContext<boolean | undefined>()
 
     useEffect(() => {
         if (demo || !isLoggedIn) {
