@@ -1,11 +1,14 @@
-import React from "react";
+import wrongDoor from '../../../assets/images/wrongDoor.webp'
 
 export const ErrorPage = () => {
     return (
         <div className="error-page">
-            <div>
+            <div style={{ marginTop: '10%', textAlign: 'center' }}>
                 <h1>Oops!</h1>
-                <p>Page not found 404</p>
+                <p>You got the wrong door, buddy!</p>
+                <img style={{ paddingTop: '2%'}}
+                    src={wrongDoor} alt="drujok_pirojok"
+                />
             </div>
         </div>
     );

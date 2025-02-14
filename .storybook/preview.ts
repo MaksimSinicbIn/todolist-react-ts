@@ -10,9 +10,9 @@ const preview: Preview = {
             values: [
                 { name: 'Dark', value: '#333' },
                 { name: 'Light', value: '#F7F9F2' },
-                { name: 'Maroon', value: '#400' },
+                { name: 'Gray', value: '#414040' },
             ],
-            default: 'Dark',
+            default: 'Gray',
         },
         controls: {
             matchers: {
@@ -20,7 +20,7 @@ const preview: Preview = {
                 date: /Date$/i,
             },
         },
-    },
+    }
 };
 
 export default preview;
