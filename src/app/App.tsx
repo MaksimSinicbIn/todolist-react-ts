@@ -14,9 +14,9 @@ import { TodolistsList } from 'features/TodolistList/ui/TodolistsList';
 import { getTheme } from 'common/theme';
 
 export const Path = {
-    Login: 'login',
-    TodolistsPage: 'todolists',
-    ErrorPage: '404'
+    Login: '/login',
+    TodolistsPage: '/todolists',
+    ErrorPage: '/404'
 } as const
 
 type AppPropsType = {
@@ -53,11 +53,11 @@ function App({ demo = false }: AppPropsType) {
             {status === 'loading' && <LinearProgress color="secondary" />}
             <Container fixed>
                 <Routes>
-                    <Route path={Path.TodolistsPage} element={<TodolistsList demo={demo}/>} />
-                    <Route path='/' element={<Navigate to={Path.TodolistsPage} />} />
+                    <Route path={Path.TodolistsPage} element={<TodolistsList demo={demo} />} />
+                    <Route path="/" element={<Navigate to={Path.TodolistsPage} />} />
                     <Route path={Path.Login} element={<Login />} />
                     <Route path={Path.ErrorPage} element={<ErrorPage />} />
-                    <Route path='*' element={<Navigate to="404" />} />
+                    <Route path="*" element={<Navigate to={Path.ErrorPage} />} />
                 </Routes>
             </Container>
         </ThemeProvider>
