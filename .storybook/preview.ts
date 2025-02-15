@@ -4,15 +4,15 @@ import { themes } from "@storybook/theming"
 const preview: Preview = {
     parameters: {
         docs: {
-            theme: themes.dark
+            theme: themes.light
         },
         backgrounds: {
             values: [
                 { name: 'Dark', value: '#333' },
-                { name: 'Light', value: '#F7F9F2' },
+                { name: 'Light', value: '#FFFFF' },
                 { name: 'Gray', value: '#414040' },
             ],
-            default: 'Gray',
+            default: 'Light',
         },
         controls: {
             matchers: {
