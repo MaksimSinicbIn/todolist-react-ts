@@ -9,11 +9,11 @@ import { selectTodolists, todolistsThunks } from '../model/todolists/todolistsSl
 import { useAppDispatch, useAppSelector } from 'common/hooks';
 import { Navigate } from 'react-router';
 
-type TodolistListPropsType = {
+type Props = {
     demo?: boolean
 }
 
-export const TodolistsList = ({ demo = false, ...props }: TodolistListPropsType) => {
+export const TodolistsList = ({ demo = false, ...props }: Props) => {
 
     const isLoggedIn = useAppSelector(selectIsLoggedIn)
     const todolists = useAppSelector(selectTodolists)

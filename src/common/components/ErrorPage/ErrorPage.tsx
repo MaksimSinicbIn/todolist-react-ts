@@ -1,5 +1,4 @@
-import wrongDoor from '../../../assets/images/wrongDoor.webp'
-import backDoor from '../../../assets/images/sticker.webp'
+import wrongDoor from 'assets/images/wrongDoor.webp'
 
 export const ErrorPage = () => {
     return (

@@ -19,11 +19,11 @@ export const Path = {
     ErrorPage: '/404'
 } as const
 
-type AppPropsType = {
+type Props = {
     demo?: boolean
 }
 
-function App({ demo = false }: AppPropsType) {
+function App({ demo = false }: Props) {
 
     const theme = useAppSelector(selectThemeMode)
     const status = useAppSelector(selectStatus)
