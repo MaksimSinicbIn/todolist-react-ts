@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import { Navigate } from 'react-router';
 import { Todolist } from './Todolist/Todolist';
 import { AddItemForm } from 'common/components';
 import { selectTasks } from '../model/tasks/tasksSlice';
-import { selectIsLoggedIn } from '../../auth/model/authSlice';
+import { selectIsLoggedIn } from 'features/auth/model/authSlice';
 import { selectTodolists, todolistsThunks } from '../model/todolists/todolistsSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { Navigate } from 'react-router';
 
 type Props = {
     demo?: boolean

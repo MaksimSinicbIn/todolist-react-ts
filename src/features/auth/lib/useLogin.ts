@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
-import { authThunks, selectIsLoggedIn } from '../model/authSlice';
 import { useAppDispatch, useAppSelector } from 'common/hooks';
-import { LoginType } from '../api/auth-api.types';
+import { LoginType } from 'features/auth/api/auth-api.types';
+import { authThunks, selectIsLoggedIn } from 'features/auth/model/authSlice';
 
 type FormikErrorType = Omit<Partial<LoginType>, 'captcha'>
 

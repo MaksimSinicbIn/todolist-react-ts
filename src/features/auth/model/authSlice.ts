@@ -1,11 +1,10 @@
 import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 import { appActions } from "app/appSlice";
-import { AuthApi } from "../api/auth-api";
-import { LoginType } from "../api/auth-api.types";
+import { AuthApi } from "features/auth/api/auth-api";
+import { LoginType } from "features/auth/api/auth-api.types";
 import { todolistsActions } from "features/TodolistList/model/todolists/todolistsSlice";
 import { createAppAsyncThunk } from "common/utils";
 import { ResultCode } from "common/enums";
-
 
 const initialState = {
     isLoggedIn: false,
